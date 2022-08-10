@@ -1,0 +1,32 @@
+{
+    "name": "def-comms-app",
+    "version": "0.0.1",
+    "description": "Starter application for the MVP of my final thesis project.",
+    "main": "./dist/electron/src/main.js",
+    "author": "Mihkel Riik",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "dev": "set NODE_ENV=development&& npm run build && electron ./dist/electron/src/main.js",
+        "build": "tsc",
+        "build:electron": "set NODE_ENV=production && npm run build && electron-builder --ia32",
+        "clean": "rimraf dist/"
+    },
+    "devDependencies": {
+        "@types/electron": "^1.6.10",
+        "electron": "^19.0.3",
+        "electron-builder": "^23.0.3",
+        "typescript": "^4.7.3"
+    },
+    "build": {
+        "productName": "defComms",
+        "appId": "ee.miku.riik.defComms",
+        "artifactName": "degComms.${ext}",
+        "files": [
+            "dist/electron/**/*"
+        ],
+        "asarUnpack": [
+            "*.node"
+        ]
+    }
+}

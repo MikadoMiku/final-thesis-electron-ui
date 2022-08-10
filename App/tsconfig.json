@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        //"noImplicitAny": true,
+        "sourceMap": true,
+        "outDir": "./dist/electron/",
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*"]
+        }
+    },
+    "include": ["src/**/*", "ui"]
+}
