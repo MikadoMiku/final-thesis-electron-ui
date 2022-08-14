@@ -1,11 +1,15 @@
 import electron, { app, BrowserWindow, globalShortcut } from "electron"
 import path from "path"
 import * as pjson from "../package.json"
+import { setupUIServer } from "./UI_Server"
+
+const addonz = require("C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints")
+export default addonz
 
 let mainWindow: BrowserWindow
 function createWindow() {
     // Create the browser window.
-
+    setupUIServer()
     mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
@@ -18,14 +22,7 @@ function createWindow() {
             contextIsolation: false,
         },
     })
-    let uiPath
-    if (process.env.NODE_ENV !== "development") {
-        uiPath = path.join(path.dirname(process.execPath), "\\public")
-    } else {
-        // TODO: local paths
-        uiPath = path.join(process.cwd(), ".\\ui\\index.html")
-    }
-    mainWindow.loadFile(uiPath)
+    mainWindow.loadURL("http://localhost:58008/")
     mainWindow.webContents.openDevTools()
 }
 
@@ -40,19 +37,6 @@ app.on("ready", () => {
         // dock icon is clicked and there are no other windows open.
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
-    let mousePos = electron.screen.getCursorScreenPoint()
-    console.log(mousePos)
-
-    const ret = globalShortcut.register("CommandOrControl+X", () => {
-        console.log("CommandOrControl+X is pressed")
-    })
-
-    if (!ret) {
-        console.log("registration failed")
-    }
-
-    // Check whether a shortcut is registered.
-    console.log(globalShortcut.isRegistered("CommandOrControl+X"))
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -66,7 +50,7 @@ app.on("window-all-closed", () => {
 
 app.on("will-quit", () => {
     // Unregister a shortcut.
-    globalShortcut.unregister("CommandOrControl+X")
+    //globalShortcut.unregister("CommandOrControl+X")
 
     // Unregister all shortcuts.
     globalShortcut.unregisterAll()
