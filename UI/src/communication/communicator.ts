@@ -2,7 +2,7 @@ import { useAudioEndpointsStore } from "../stores/audioEndpointsStore"
 
 let connection: WebSocket
 
-export const setupComminucator = (): void => {
+export const setupCommunicator = (): void => {
     connection = new WebSocket("ws://" + window.location.host)
     connection.onmessage = (event) => {
         console.log("%cRECEIVED MESSAGE: ", "font-weight: bold; color: orange")

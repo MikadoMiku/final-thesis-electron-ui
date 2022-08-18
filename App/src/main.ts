@@ -1,4 +1,4 @@
-import electron, { app, BrowserWindow, globalShortcut } from "electron"
+import electron, { app, BrowserWindow, globalShortcut, shell } from "electron"
 import path from "path"
 import * as pjson from "../package.json"
 import { setupUIServer } from "./UI_Server"
@@ -16,6 +16,8 @@ function createWindow() {
         autoHideMenuBar: false,
         useContentSize: true,
         resizable: true,
+        icon: path.join(__dirname, "icons/icon.ico"),
+
         webPreferences: {
             webSecurity: false,
             nodeIntegration: true,
@@ -24,6 +26,10 @@ function createWindow() {
     })
     mainWindow.loadURL("http://localhost:58008/")
     mainWindow.webContents.openDevTools()
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url)
+        return { action: "deny" }
+    })
 }
 
 // This method will be called when Electron has finished

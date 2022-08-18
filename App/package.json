@@ -1,5 +1,5 @@
 {
-    "name": "def-comms-app",
+    "name": "demut",
     "version": "0.0.1",
     "description": "Starter application for the MVP of my final thesis project.",
     "main": "./dist/electron/src/main.js",
@@ -20,11 +20,18 @@
     },
     "build": {
         "productName": "defComms",
-        "appId": "ee.miku.riik.defComms",
+        "appId": "ee.miku.riik.demut",
         "artifactName": "degComms.${ext}",
         "files": [
-            "dist/electron/**/*"
+            "dist/electron/**/*",
+            "icons/*"
         ],
+        "directories": {
+            "buildResources": "icons"
+        },
+        "win": {
+            "icon": ".icons/icon.png"
+        },
         "asarUnpack": [
             "*.node"
         ]
