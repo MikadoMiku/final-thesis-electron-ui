@@ -27,30 +27,80 @@ function chooseFunction(bFunction: string) {
 }
 
 const navButtonsArray: routeButton[] = [
-    { name: "Refresh", route: "/x", function: "getAudioEndpoints" },
+    { name: "Get endpoints", route: "/x", function: "getAudioEndpoints" },
 ]
 </script>
 <template>
     <div class="container">
         <div class="col-6 row-24 option-menu-container">
-            <MainNavMenu
-                :use-routes="false"
-                :buttons="navButtonsArray"
-                @nav-button-click="chooseFunction"
-            ></MainNavMenu>
+            <div class="col-24 row-3 current-endpoint-container">
+                <div class="col-24 row-24 current-endpoint">
+                    <p class="current-endpoint-text neonText pulsate">
+                        VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)
+                    </p>
+                </div>
+            </div>
+            <div class="col-24 row-21">
+                <MainNavMenu
+                    :use-routes="false"
+                    :buttons="navButtonsArray"
+                    @nav-button-click="chooseFunction"
+                ></MainNavMenu>
+            </div>
         </div>
         <div class="col-18 row-24 audio-endpoint-container">
-            <p
-                class="audio-endpoint"
+            <div
+                class="endpoint-button-container"
                 v-for="(endpoint, index) in audioEndpoints"
                 :key="index"
             >
-                {{ index + 1 }} - {{ endpoint }}
-            </p>
+                <div class="col-1 row-24 endpoint-button-index">
+                    <div class="col-24 row-24 endpoint-button-index-text">
+                        <p class="neonText pulsate">{{ index }}</p>
+                    </div>
+                </div>
+                <button class="col-23 row-24 endpoint-button">
+                    {{ endpoint }}
+                </button>
+            </div>
         </div>
     </div>
 </template>
 <style scoped>
+.endpoint-button-index-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.endpoint-button-index {
+    color: white;
+}
+.current-endpoint-container {
+    background-color: rgb(14, 13, 13);
+}
+.current-endpoint {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.current-endpoint-text {
+    color: white;
+    font-size: var(--M-font-size);
+    text-align: center;
+}
+.endpoint-button {
+    background-color: #171717;
+    color: white;
+    color: var(--accent-color);
+    font-size: var(--M-font-size);
+}
+
+.endpoint-button:hover {
+    box-shadow: 0px 0px 5px 1px var(--accent-color);
+    background: #050505;
+}
+
 .container {
     width: 100%;
     height: 100%;
@@ -59,14 +109,34 @@ const navButtonsArray: routeButton[] = [
 
 .audio-endpoint-container {
     display: grid;
-    grid-auto-rows: min-content;
+    grid-auto-rows: max(5%, 10%);
     overflow-y: auto;
-    grid-gap: 6px;
+    grid-gap: 10px;
     padding: 10px;
     padding-left: 50px;
 }
 
 .option-menu-container {
-    background-color: rgba(0, 0, 0, 0.137);
+    background: rgba(0, 0, 0, 0.247);
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #171717;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(177, 106, 0);
 }
 </style>

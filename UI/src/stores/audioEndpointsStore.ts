@@ -5,13 +5,21 @@ const testData = [
     '"VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)"',
     '"CABLE Input (VB-Audio Virtual Cable)"',
     '"Speakers (NVIDIA Broadcast)"',
+    '"Speakers (FiiO K5 Pro)"',
+    '"VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)"',
+    '"CABLE Input (VB-Audio Virtual Cable)"',
+    '"Speakers (NVIDIA Broadcast)"',
+    '"Speakers (FiiO K5 Pro)"',
+    '"VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)"',
+    '"CABLE Input (VB-Audio Virtual Cable)"',
+    '"Speakers (NVIDIA Broadcast)"',
 ]
 
 export const useAudioEndpointsStore = defineStore({
     id: "AudioEndpoints",
     state: () => ({
-        audioEndpoints: [] as string[],
-        // audioEndpoints: testData,
+        // audioEndpoints: [] as string[],
+        audioEndpoints: testData,
         gotEndpoints: true,
     }),
     actions: {

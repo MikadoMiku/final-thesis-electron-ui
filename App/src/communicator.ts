@@ -1,5 +1,4 @@
 import { _ws } from "./UI_Server"
-import { fstat } from "original-fs"
 import addon from "./main"
 
 export const handleMessage = (message: string): void => {
@@ -7,10 +6,18 @@ export const handleMessage = (message: string): void => {
     try {
         const msg: any = JSON.parse(message)
         //getMessageController().routeIncomingMessage(msg)
-        if (msg === "PING") {
-            let natObject: any
-            natObject = addon.getAudioEndpoints()
-            sendMsg(JSON.stringify(natObject))
+
+        switch (msg) {
+            case "PING":
+                let natObject: any
+                natObject = addon.getAudioEndpoints()
+                sendMsg(JSON.stringify(natObject))
+                break
+            case "playSong":
+                addon.playSong()
+                break
+            default:
+                console.log("UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON")
         }
     } catch (e) {
         console.error("Unable to handle WS message", message.toString())
