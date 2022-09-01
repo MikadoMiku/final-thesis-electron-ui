@@ -14,7 +14,10 @@ export const handleMessage = (message: string): void => {
                 sendMsg(JSON.stringify(natObject))
                 break
             case "playSong":
-                addon.playSong()
+                playSong()
+                break
+            case "stopSong":
+                stopSong()
                 break
             default:
                 console.log("UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON")
@@ -22,6 +25,14 @@ export const handleMessage = (message: string): void => {
     } catch (e) {
         console.error("Unable to handle WS message", message.toString())
     }
+}
+
+function playSong() {
+    return addon.playSong()
+}
+
+function stopSong() {
+    return addon.stopSong()
 }
 
 export const sendMsg = (msg: any): void => {
