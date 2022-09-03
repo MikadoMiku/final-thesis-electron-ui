@@ -9,6 +9,7 @@ const navButtonsArray: routeButton[] = [
     { name: "Audio files", route: "/", function: "" },
     { name: "Audio macros", route: "/", function: "" },
     { name: "Testing", route: "/testing", function: "" },
+    { name: "Ping wheel", route: "/pingWheel", function: "" },
 ]
 </script>
 <template>
