@@ -1,10 +1,11 @@
 import electron, { app, BrowserWindow, globalShortcut, shell } from "electron"
 import path from "path"
 import * as pjson from "../package.json"
+import { sendMsg } from "./communicator"
 import { setupUIServer } from "./UI_Server"
 
-const addonz = require("C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints")
-export default addonz
+const addonNat = require("C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints")
+export default addonNat
 
 let mainWindow: BrowserWindow
 function createWindow() {
@@ -43,6 +44,9 @@ app.on("ready", () => {
         // dock icon is clicked and there are no other windows open.
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
+    addonNat.startMouseListener((x: any, y: any) =>
+        sendMsg("Mouse listened to: X->" + x + " | Y->" + y)
+    )
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue"
 
+// Instead of using buttons and having wonky clickable corners on the circle DOM rectangle. Copy the logic from here: https://codepen.io/wheatup/pen/GbgyLY
+// Use JS to calculate the x and y of the mouse movement like in C++, maybe even connect C++ to javascript instead POG?
+
 const arcNo = ref(8)
 const startingDeg = 270
 
@@ -26,6 +29,16 @@ function segmentStyling(segmentNo: number) {
     }
 }
 
+function textReverseSkew(segmentNo: number) {
+    const shiftedStartingDeg = roundDeg(startingDeg - arcDegree() / 2)
+    const rotationDeg = roundDeg(shiftedStartingDeg + segmentNo * arcDegree())
+    return {
+        transform:
+            "skew(-" + (arcDegree() + 5) + "deg)" + "rotate(" + 115 + "deg)",
+        backgroundColor: "#171717" /* + randomColor() */,
+    }
+}
+
 function al(arcNo: number) {
     alert(arcNo)
 }
@@ -40,10 +53,21 @@ function al(arcNo: number) {
             v-for="arcIndex in arcNo"
             :key="arcIndex"
             :style="segmentStyling(arcIndex)"
-        ></button>
+        >
+            <span class="segment-text" :style="textReverseSkew(arcIndex)">{{
+                arcIndex
+            }}</span>
+        </button>
     </div>
 </template>
 <style scoped>
+.segment-text {
+    color: var(--accent-color);
+    position: absolute;
+    top: 13%;
+    left: 21%;
+    font-size: var(--M-font-size);
+}
 .pingwheel-circle {
     position: relative;
     height: 95%;
@@ -74,7 +98,7 @@ function al(arcNo: number) {
     top: 50%;
     left: 50%;
     width: 100%;
-    height: 35%;
+    height: 100%;
     transform-origin: 0 0;
     border: none;
 }
