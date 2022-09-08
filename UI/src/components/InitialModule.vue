@@ -12,7 +12,7 @@ const gotAudioEndpoints = computed(() => {
 })
 
 function getEndpoints() {
-    sendMsg("PING")
+    sendMsg({type: "PING"})
 }
 
 //getMapSize

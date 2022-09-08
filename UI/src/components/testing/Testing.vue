@@ -3,11 +3,15 @@ import { sendMsg } from "../../communication/communicator"
 import { computed, ref } from "vue"
 
 function playSongInC() {
-    sendMsg("playSong")
+    sendMsg({ type: "playSong" })
 }
 
 function stopSongInC() {
-    sendMsg("stopSong")
+    sendMsg({ type: "stopSong" })
+}
+
+function listAudioClips() {
+    sendMsg({ type: "listAudioClips" })
 }
 </script>
 <template>
@@ -24,6 +28,14 @@ function stopSongInC() {
                     </button>
                     <button class="col-12 row-24" @click="stopSongInC()">
                         Stop song
+                    </button>
+                </div>
+            </div>
+            <div class="col-24 row-24 testing-module">
+                <div class="col-16 row-24"></div>
+                <div class="col-8 row-24">
+                    <button class="col-12 row-24" @click="listAudioClips()">
+                        List files in console from clip dir
                     </button>
                 </div>
             </div>

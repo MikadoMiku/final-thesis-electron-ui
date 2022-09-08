@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { sendMsg } from "../../communication/communicator"
 import { computed, ref } from "vue"
 
 // Instead of using buttons and having wonky clickable corners on the circle DOM rectangle. Copy the logic from here: https://codepen.io/wheatup/pen/GbgyLY
@@ -6,6 +7,17 @@ import { computed, ref } from "vue"
 
 const arcNo = ref(8)
 const startingDeg = 270
+
+const arcAudioClipMap = new Map<number, string>([
+    [1, "jellybeans"],
+    [2, "kanker"],
+    [3, "magnumDong"],
+    [4, "shitYourself"],
+    [5, "suck_my_ass"],
+    [6, "urARtrd"],
+    [7, "void"],
+    [8, "void"],
+])
 
 function arcDegree(): number {
     return roundDeg(360 / arcNo.value)
@@ -39,8 +51,8 @@ function textReverseSkew(segmentNo: number) {
     }
 }
 
-function al(arcNo: number) {
-    alert(arcNo)
+function playClip(arcNo: number) {
+    sendMsg({ type: "playClip", payload: arcAudioClipMap.get(arcNo) })
 }
 </script>
 <template>
@@ -48,7 +60,7 @@ function al(arcNo: number) {
     <div class="pingwheel-circle">
         <div class="pingwheel-inner-circle"></div>
         <button
-            @click="al(arcIndex)"
+            @click="playClip(arcIndex)"
             class="segment"
             v-for="arcIndex in arcNo"
             :key="arcIndex"

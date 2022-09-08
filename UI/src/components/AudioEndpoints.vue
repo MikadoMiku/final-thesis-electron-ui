@@ -13,7 +13,7 @@ const gotAudioEndpoints = computed(() => {
 })
 
 function getAudioEndpoints() {
-    sendMsg("PING")
+    sendMsg({type: "PING"})
 }
 
 function chooseFunction(bFunction: string) {

@@ -1,13 +1,15 @@
 import { _ws } from "./UI_Server"
 import addon from "./main"
 
+type GenericEvent = { type: string; payload?: any }
+
 export const handleMessage = (message: string): void => {
     console.log("from UI", message.toString())
     try {
-        const msg: any = JSON.parse(message)
+        const msg: GenericEvent = JSON.parse(message)
         //getMessageController().routeIncomingMessage(msg)
 
-        switch (msg) {
+        switch (msg.type) {
             case "PING":
                 let natObject: any
                 natObject = addon.getAudioEndpoints()
@@ -19,6 +21,12 @@ export const handleMessage = (message: string): void => {
             case "stopSong":
                 stopSong()
                 break
+            case "listAudioClips":
+                addon.listAudioClips()
+                break;
+            case "playClip":
+                addon.playClip(msg.payload)
+                break;
             default:
                 console.log("UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON")
         }

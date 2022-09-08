@@ -1,5 +1,8 @@
 import { useAudioEndpointsStore } from "../stores/audioEndpointsStore"
 
+// Need to make an API folder, THIS IS BAD IM LAZYYY
+type GenericEvent = { type: string; payload?: any }
+
 let connection: WebSocket
 
 export const setupCommunicator = (): void => {
@@ -20,7 +23,7 @@ export const setupCommunicator = (): void => {
     }
 }
 
-export const sendMsg = (msg: any) => {
+export function sendMsg(msg: GenericEvent) {
     console.log(
         "%cSending Message to MiddleWare -------> ",
         "color: limegreen;",
