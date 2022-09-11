@@ -13,7 +13,7 @@ const gotAudioEndpoints = computed(() => {
 })
 
 function getAudioEndpoints() {
-    sendMsg({type: "PING"})
+    sendMsg({ type: "PING" })
 }
 
 function chooseFunction(bFunction: string) {
@@ -29,6 +29,10 @@ function chooseFunction(bFunction: string) {
 const navButtonsArray: routeButton[] = [
     { name: "Get endpoints", route: "/x", function: "getAudioEndpoints" },
 ]
+
+function setUsedAudioEndpointById(endpointId: string) {
+    sendMsg({ type: "setAudioEndpointById", payload: endpointId })
+}
 </script>
 <template>
     <div class="container">
@@ -51,16 +55,19 @@ const navButtonsArray: routeButton[] = [
         <div class="col-18 row-24 audio-endpoint-container">
             <div
                 class="endpoint-button-container"
-                v-for="(endpoint, index) in audioEndpoints"
+                v-for="(endpointId, endpointName, index) in audioEndpoints"
                 :key="index"
             >
                 <div class="col-1 row-24 endpoint-button-index">
                     <div class="col-24 row-24 endpoint-button-index-text">
-                        <p class="neonText pulsate">{{ index }}</p>
+                        <p class="neonText pulsate">{{ index + 1 }}</p>
                     </div>
                 </div>
-                <button class="col-23 row-24 endpoint-button">
-                    {{ endpoint }}
+                <button
+                    class="col-23 row-24 endpoint-button"
+                    @click="setUsedAudioEndpointById(endpointId)"
+                >
+                    {{ endpointName }}
                 </button>
             </div>
         </div>
@@ -86,7 +93,7 @@ const navButtonsArray: routeButton[] = [
 
 .current-endpoint-text {
     color: white;
-    font-size: var(--M-font-size);
+    font-size: var(--S-font-size);
     text-align: center;
 }
 .endpoint-button {

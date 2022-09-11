@@ -13,7 +13,7 @@ export const handleMessage = (message: string): void => {
             case "PING":
                 let natObject: any
                 natObject = addon.getAudioEndpoints()
-                sendMsg(JSON.stringify(natObject))
+                sendMsg(natObject)
                 break
             case "playSong":
                 playSong()
@@ -23,10 +23,13 @@ export const handleMessage = (message: string): void => {
                 break
             case "listAudioClips":
                 addon.listAudioClips()
-                break;
+                break
             case "playClip":
                 addon.playClip(msg.payload)
-                break;
+                break
+            case "setAudioEndpointById":
+                addon.setAudioEndpointDeviceId(msg.payload)
+                break
             default:
                 console.log("UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON")
         }
