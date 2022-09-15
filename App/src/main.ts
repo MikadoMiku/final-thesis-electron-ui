@@ -1,4 +1,10 @@
-import electron, { app, BrowserWindow, globalShortcut, shell } from "electron"
+import electron, {
+    app,
+    BrowserWindow,
+    dialog,
+    globalShortcut,
+    shell,
+} from "electron"
 import path from "path"
 import * as pjson from "../package.json"
 import { sendMsg } from "./communicator"
@@ -33,17 +39,31 @@ function createWindow() {
     })
 }
 
+const getFileFromUser = async () => {
+    const files = await dialog.showOpenDialog({
+        properties: ["openFile"],
+    })
+    if (!files) {
+        return
+    }
+    console.log(files)
+}
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
     createWindow()
 
+    /*     mainWindow.once("ready-to-show", () => {
+        getFileFromUser()
+    }) */
+
     app.on("activate", function () {
         // On macOS it's common to re-create a window in the app when the
         // dock icon is clicked and there are no other windows open.
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
+
     addonNat.startMouseListener((x: any, y: any) =>
         sendMsg("Mouse listened to: X->" + x + " | Y->" + y)
     )

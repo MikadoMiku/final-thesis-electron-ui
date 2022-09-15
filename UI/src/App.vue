@@ -15,10 +15,12 @@ import MainPage from "./components/MainPage.vue"
     --S-font-size: 12px;
     --accent-color: #d49124;
     --component-b-color: rgb(14, 13, 13);
+    --component-b-color-light: rgb(23, 23, 23);
     --linear-b-color: linear-gradient(0deg, black -5%, #171717);
     --row-amount: 24;
     --col-amount: 24;
-    --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 html,
@@ -32,7 +34,7 @@ body,
     font-weight: normal;
     font-size: 19px;
     font-family: var(--system-ui);
-   /*  font-family: arial, helvetica, sans-serif; */
+    /*  font-family: arial, helvetica, sans-serif; */
     font-feature-settings: "tnum";
     font-variant-numeric: tabular-nums;
     user-select: none;

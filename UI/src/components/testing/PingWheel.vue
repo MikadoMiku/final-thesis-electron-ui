@@ -37,7 +37,6 @@ function segmentStyling(segmentNo: number) {
     return {
         transform:
             "rotate(" + rotationDeg + "deg) skew(" + (arcDegree() + 5) + "deg)",
-        backgroundColor: "#171717" /* + randomColor() */,
     }
 }
 
@@ -47,7 +46,6 @@ function textReverseSkew(segmentNo: number) {
     return {
         transform:
             "skew(-" + (arcDegree() + 5) + "deg)" + "rotate(" + 115 + "deg)",
-        backgroundColor: "#171717" /* + randomColor() */,
     }
 }
 
@@ -113,11 +111,6 @@ function playClip(arcNo: number) {
     height: 100%;
     transform-origin: 0 0;
     border: none;
-}
-
-.segment:hover {
-    color: var(--accent-color);
-    box-shadow: 0px 0px 5px 1px var(--accent-color);
-    background: #171717;
+    background-color: var(--component-b-color-light);
 }
 </style>

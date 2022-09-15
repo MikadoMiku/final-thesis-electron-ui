@@ -1,5 +1,7 @@
 import { _ws } from "./UI_Server"
 import addon from "./main"
+import fs from "fs"
+import { copyFile } from "fs/promises"
 
 type GenericEvent = { type: string; payload?: any }
 
@@ -30,11 +32,20 @@ export const handleMessage = (message: string): void => {
             case "setAudioEndpointById":
                 addon.setAudioEndpointDeviceId(msg.payload)
                 break
+            case "addClipFiles":
+                const fileCopyPromise = addFilesToApp(msg.payload)
+                fileCopyPromise.finally(() => sendMsg({ type: "fileCopyDone" }))
             default:
                 console.log("UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON")
         }
     } catch (e) {
         console.error("Unable to handle WS message", message.toString())
+    }
+}
+
+async function addFilesToApp(filePaths: string[]) {
+    for (const filePath of filePaths) {
+        await copyFile(filePath, "C:/Users/power/Desktop/Demut_test_file_drag")
     }
 }
 

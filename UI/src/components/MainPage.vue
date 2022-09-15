@@ -6,7 +6,7 @@ import { computed, ref } from "vue"
 const navButtonsArray: routeButton[] = [
     { name: "Home", route: "/", function: "" },
     { name: "Audio endpoints", route: "/audioEndpoints", function: "" },
-    { name: "Audio files", route: "/", function: "" },
+    { name: "Audio files", route: "/audioFiles", function: "" },
     { name: "Audio macros", route: "/", function: "" },
     { name: "Testing", route: "/testing", function: "" },
     { name: "Ping wheel", route: "/pingWheel", function: "" },

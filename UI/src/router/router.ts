@@ -3,6 +3,7 @@ import MainView from "../components/MainView.vue"
 import AudioEndpoints from "../components/AudioEndpoints.vue"
 import Testing from "../components/testing/Testing.vue"
 import PingWheel from "../components/testing/PingWheel.vue"
+import AudioFiles from "../components/AudioFiles.vue"
 
 const routes = [
     {
@@ -20,6 +21,10 @@ const routes = [
     {
         path: "/pingWheel",
         component: PingWheel,
+    },
+    {
+        path: "/audioFiles",
+        component: AudioFiles,
     },
 ]
 
