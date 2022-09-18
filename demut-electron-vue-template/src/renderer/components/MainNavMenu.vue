@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { sendMsg } from "../communication/communicator"
 import type { PropType } from "vue"
 import { useRouter } from "vue-router"
 

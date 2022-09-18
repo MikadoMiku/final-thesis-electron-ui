@@ -5,7 +5,7 @@ import { useAudioEndpointsStore } from "../stores/audioEndpointsStore"
 import type { routeButton } from "./MainNavMenu.vue"
 import MainNavMenu from "./MainNavMenu.vue"
 const audioEndpoints = computed(() => {
-    return useAudioEndpointsStore().audioEndpoints
+    return useAudioEndpointsStore().audioEndpointList
 })
 
 const gotAudioEndpoints = computed(() => {
@@ -13,7 +13,7 @@ const gotAudioEndpoints = computed(() => {
 })
 
 function getAudioEndpoints() {
-    sendMsg({ type: "PING" })
+    sendMsg({ type: "getAudioEndpoints" })
 }
 
 function chooseFunction(bFunction: string) {

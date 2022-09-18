@@ -3,6 +3,9 @@ import { createPinia } from "pinia"
 import App from "./App.vue"
 import routes from "./router/router"
 import { createRouter, createWebHashHistory } from "vue-router"
+import { setupCommunicator } from "./communication/communicator"
+
+setupCommunicator()
 
 const router = createRouter({
     history: createWebHashHistory(),

@@ -6,12 +6,12 @@ function onFileDrop(event: DragEvent) {
     console.log("pog")
     console.log(event.dataTransfer!.files)
     /* const filePaths: string[] = Array.from(event.dataTransfer!.files).map((file) => file.) */
-    console.table([...event.dataTransfer!.files])
+    console.table(event.dataTransfer!.files)
     const filez: FileList = event.dataTransfer!.files
     const file = filez[0] as unknown as { path: string }
     sendMsg({
         type: "addClipFiles",
-        payload: file,
+        payload: [file.path],
     })
 }
 </script>

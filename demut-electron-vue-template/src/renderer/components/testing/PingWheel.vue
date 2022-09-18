@@ -50,7 +50,8 @@ function textReverseSkew(segmentNo: number) {
 }
 
 function playClip(arcNo: number) {
-    sendMsg({ type: "playClip", payload: arcAudioClipMap.get(arcNo) })
+    const clipName = arcAudioClipMap.get(arcNo)
+    if (clipName) sendMsg({ type: "playClip", payload: clipName })
 }
 </script>
 <template>

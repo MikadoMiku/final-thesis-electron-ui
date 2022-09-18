@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MainPage from "./components/MainPage.vue"
-window.electron.ipcRenderer.send("message", "Hello from App.vue!")
+// window.electron.msgToBack({type: 'playClip', payload: ''})
 </script>
 
 <template>

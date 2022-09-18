@@ -3,16 +3,17 @@ import { sendMsg } from "../../communication/communicator"
 import { computed, ref } from "vue"
 
 function playSongInC() {
-    sendMsg({ type: "playSong" })
+    sendMsg({ type: "playClip", payload: "sharks" })
 }
 
 function stopSongInC() {
-    sendMsg({ type: "stopSong" })
+    sendMsg({ type: "stopClip" })
 }
 
 function listAudioClips() {
-    sendMsg({ type: "listAudioClips" })
+    sendMsg({ type: "getAudioClipNames" })
 }
+
 </script>
 <template>
     <div class="col-24 row-24 testing-dashboard-container">
