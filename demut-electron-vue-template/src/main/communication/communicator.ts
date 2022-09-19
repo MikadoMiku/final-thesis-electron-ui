@@ -2,7 +2,7 @@ import { ipcMain, IpcMainEvent } from "electron"
 import { BackToUiEventSet, UiToBackEventSet } from "../../api/api-messages"
 import nativeDemutAddon, { mainWindow } from "../main"
 import { copyFile } from "fs/promises"
-import { AudioEndpoint } from "../../api/api-payload-types"
+import { AudioEndpoint, CopyableFile } from "../../api/api-payload-types"
 
 export function setupCommunicator() {
     console.log("SETTING UP COMMUNICATOR")
@@ -42,9 +42,16 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
     }
 }
 
-async function addFilesToApp(filePaths: string[]) {
-    for (const filePath of filePaths) {
-        await copyFile(filePath, "C:/Users/power/Desktop/Demut_test_file_drag")
+async function addFilesToApp(filePaths: CopyableFile[]) {
+    try {
+        for (const file of filePaths) {
+            await copyFile(
+                file.filePath,
+                "C:/Users/power/Desktop/Demut_test_file_drag/" + file.fileName
+            )
+        }
+    } catch (e) {
+        console.log(e)
     }
 }
 

@@ -1,4 +1,4 @@
-import { AudioEndpoint } from "./api-payload-types"
+import { AudioEndpoint, CopyableFile } from "./api-payload-types"
 
 export type PlayClip = { type: "playClip"; payload: string }
 
@@ -13,7 +13,7 @@ export type SetAudioEndpointId = {
 
 export type GetAudioClipNames = { type: "getAudioClipNames"}
 
-export type DragAndDropAudioFiles = { type: "addClipFiles"; payload: string[] }
+export type DragAndDropAudioFiles = { type: "addClipFiles"; payload: CopyableFile[] }
 
 export type UiToBackEventSet =
     | PlayClip

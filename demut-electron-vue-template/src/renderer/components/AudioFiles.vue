@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { sendMsg } from "../communication/communicator"
 import { computed, ref } from "vue"
+import { CopyableFile } from "../../api/api-payload-types"
 
 function onFileDrop(event: DragEvent) {
-    console.log("pog")
-    console.log(event.dataTransfer!.files)
-    /* const filePaths: string[] = Array.from(event.dataTransfer!.files).map((file) => file.) */
     console.table(event.dataTransfer!.files)
-    const filez: FileList = event.dataTransfer!.files
-    const file = filez[0] as unknown as { path: string }
     sendMsg({
         type: "addClipFiles",
-        payload: [file.path],
+        payload: Array.from(event.dataTransfer!.files).map((f) => {
+            const fObject: CopyableFile = {
+                filePath: f.path,
+                fileName: f.name,
+                fileType: f.type,
+            }
+            return fObject
+        }),
     })
 }
 </script>
@@ -31,7 +34,9 @@ function onFileDrop(event: DragEvent) {
                 @drop="onFileDrop"
                 @dragenter.prevent
                 @dragover.prevent
-            ></div>
+            >
+                <p class="drag-file-upload-hint">Drag & Drop files</p>
+            </div>
         </div>
     </div>
 </template>
@@ -47,6 +52,7 @@ function onFileDrop(event: DragEvent) {
 .audio-clip-file-browser {
     background-color: var(--component-b-color-light);
     border-radius: 10px;
+    box-shadow: 0px 0px 1px 1px var(--accent-color);
 }
 
 .main-container-upper-right {
@@ -56,6 +62,7 @@ function onFileDrop(event: DragEvent) {
 .audio-clip-data-window {
     background-color: var(--component-b-color-light);
     border-radius: 10px;
+    box-shadow: 0px 0px 1px 1px var(--accent-color);
 }
 
 .main-container-lower {
@@ -65,5 +72,15 @@ function onFileDrop(event: DragEvent) {
 .drag-file-upload {
     background-color: var(--component-b-color-light);
     border-radius: 10px;
+    box-shadow: 0px 0px 1px 1px var(--accent-color);
+    display: flex;
+    align-items: center;
+}
+
+.drag-file-upload-hint {
+    font-size: var(--L-font-size);
+    color: var(--accent-color);
+    text-align: center;
+    width: 100%;
 }
 </style>
