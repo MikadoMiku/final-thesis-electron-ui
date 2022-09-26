@@ -7,3 +7,10 @@ export interface CopyableFile {
     fileName: string
     fileType: string
 }
+
+export interface FileStats {
+    creationTime: string
+    name: string
+    size: number
+    extension: string
+}
