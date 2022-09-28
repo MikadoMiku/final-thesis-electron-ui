@@ -3,7 +3,10 @@ import { BackToUiEventSet, UiToBackEventSet } from '../../api/api-messages'
 import nativeDemutAddon, { mainWindow } from '../main'
 import { copyFile } from 'fs/promises'
 import { AudioEndpoint, CopyableFile } from '../../api/api-payload-types'
-import { getDataOfFiles } from './communicatorFunctions'
+import {
+  getDataOfFiles,
+  startAudioCLipFilesDirWatcher
+} from './communicatorFunctions'
 
 export function setupCommunicator() {
   console.log('SETTING UP COMMUNICATOR')
@@ -38,6 +41,7 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         break
       case 'getDataOfClipFiles':
         getDataOfFiles()
+        startAudioCLipFilesDirWatcher()
         break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')

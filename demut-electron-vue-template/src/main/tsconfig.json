@@ -9,6 +9,8 @@
     "outDir": "../../build/main",
     "allowJs": true,
     "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
   },
   "exclude": ["static"]
 }
