@@ -3,7 +3,7 @@ import { computed, ref } from "vue"
 </script>
 <template>
     <div class="welcome-page-container">
-        <h1 class="neonText pulsate">Welcome</h1>
+        <h1 class="">Welcome</h1>
     </div>
 </template>
 <style scoped>

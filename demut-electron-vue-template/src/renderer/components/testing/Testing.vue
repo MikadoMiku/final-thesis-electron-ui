@@ -18,7 +18,7 @@ function listAudioClips() {
 <template>
     <div class="col-24 row-24 testing-dashboard-container">
         <div class="col-24 row-2 testing-dashboard-header">
-            <h1 class="neonText pulsate">Testing dashboard</h1>
+            <h1 class="">Testing dashboard</h1>
         </div>
         <div class="col-24 row-22 testing-dashboard-body">
             <div class="col-24 row-24 testing-module">

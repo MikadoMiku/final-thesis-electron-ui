@@ -39,7 +39,7 @@ function setUsedAudioEndpointById(endpointId: string) {
         <div class="col-6 row-24 option-menu-container">
             <div class="col-24 row-3 current-endpoint-container">
                 <div class="col-24 row-24 current-endpoint">
-                    <p class="current-endpoint-text neonText pulsate">
+                    <p class="current-endpoint-text">
                         VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)
                     </p>
                 </div>
@@ -60,7 +60,7 @@ function setUsedAudioEndpointById(endpointId: string) {
             >
                 <div class="col-1 row-24 endpoint-button-index">
                     <div class="col-24 row-24 endpoint-button-index-text">
-                        <p class="neonText pulsate">{{ index + 1 }}</p>
+                        <p class="">{{ index + 1 }}</p>
                     </div>
                 </div>
                 <button
