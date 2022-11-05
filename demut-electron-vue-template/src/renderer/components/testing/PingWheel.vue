@@ -1,23 +1,16 @@
 <script setup lang="ts">
 import { sendMsg } from "../../communication/communicator"
 import { computed, ref } from "vue"
+import { usePingwheelStore } from "../../stores/pingwheelStore";
 
 // Instead of using buttons and having wonky clickable corners on the circle DOM rectangle. Copy the logic from here: https://codepen.io/wheatup/pen/GbgyLY
 // Use JS to calculate the x and y of the mouse movement like in C++, maybe even connect C++ to javascript instead POG?
 
 const arcNo = ref(8)
 const startingDeg = 270
+// const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
 
-const arcAudioClipMap = new Map<number, string>([
-    [1, "jellybeans"],
-    [2, "kanker"],
-    [3, "magnumDong"],
-    [4, "shitYourself"],
-    [5, "suck_my_ass"],
-    [6, "urARtrd"],
-    [7, "void"],
-    [8, "void"],
-])
+const arcAudioClipMap = computed<Map<number, string>>(() => usePingwheelStore().configuredPingwheelAudioClips)
 
 function arcDegree(): number {
     return roundDeg(360 / arcNo.value)
@@ -50,7 +43,7 @@ function textReverseSkew(segmentNo: number) {
 }
 
 function playClip(arcNo: number) {
-    const clipName = arcAudioClipMap.get(arcNo)
+    const clipName = arcAudioClipMap.value.get(arcNo)
     if (clipName) sendMsg({ type: "playClip", payload: clipName })
 }
 </script>

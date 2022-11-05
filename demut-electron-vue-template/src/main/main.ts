@@ -70,8 +70,8 @@ app.whenReady().then(() => {
   createWindow()
   setupCommunicator()
   console.log('SENDING MESSAGE TO UI')
-  nativeDemutAddon.startMouseListener((x: number, y: number) =>
-    sendMsg({ type: 'nativeMouseEvent', payload: { mouseX: x, mouseY: y } })
+  nativeDemutAddon.startMouseListener((x: number, y: number, s: number) =>
+    sendMsg({ type: 'nativeMouseEvent', payload: { mouseX: x, mouseY: y, sector: s } })
   )
   /* mainWindow?.webContents.on("did-finish-load", () => {
         mainWindow?.webContents.send("message-from-back", { type: "poop" })
