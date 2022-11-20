@@ -30,15 +30,6 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
       <div class="col-24 row-24 main-container-upper-left">
         <div class="col-24 row-24 audio-clip-file-browser">
           <div class="col-24 row-24 audio-clip-file-browser-inner-container">
-            <!--                       <table class="label-container">
-                            <tbody>
-                                <tr>
-                                    <td class="second-td label">name</td>
-                                    <td class="third-td label">extension</td>
-                                    <td class="fourth-td label">size</td>
-                                </tr>
-                            </tbody>
-                        </table> -->
             <table class="table-right">
               <thead>
                 <tr>
