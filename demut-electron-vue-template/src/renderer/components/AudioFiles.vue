@@ -134,7 +134,7 @@ th {
 
 .audio-clip-file-browser {
   background-color: var(--component-b-color-light);
-  border-radius: 10px;
+  border-radius: var(--common-border-radius);
   box-shadow: 0px 0px 1px 1px var(--accent-color);
   padding: 5px;
 }
@@ -150,7 +150,7 @@ th {
 
 .audio-clip-data-window {
   background-color: var(--component-b-color-light);
-  border-radius: 10px;
+  border-radius: var(--common-border-radius);
   box-shadow: 0px 0px 1px 1px var(--accent-color);
 }
 
@@ -160,7 +160,7 @@ th {
 
 .drag-file-upload {
   background-color: var(--component-b-color-light);
-  border-radius: 10px;
+  border-radius: var(--common-border-radius);
   box-shadow: 0px 0px 1px 1px var(--accent-color);
   display: flex;
   align-items: center;
@@ -176,23 +176,23 @@ th {
 /* width */
 ::-webkit-scrollbar {
   width: 2px;
-  border-radius: 10px;
+  border-radius: var(--common-border-radius);
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  border-radius: 10px;
+  border-radius: var(--common-border-radius);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: var(--common-border-radius);
   background: rgb(88, 86, 86);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  border-radius: 10px;
+  border-radius: var(--common-border-radius);
   background: #777;
 }
 </style>

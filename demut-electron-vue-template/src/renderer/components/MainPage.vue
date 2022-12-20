@@ -7,6 +7,7 @@ const navButtonsArray: routeButton[] = [
     { name: "Home", route: "/", function: "" },
     { name: "Audio endpoints", route: "/audioEndpoints", function: "" },
     { name: "Audio files", route: "/audioFiles", function: "" },
+    { name: "Generate audio files", route: "/textToSpeech", function: "" },
     { name: "Audio macros", route: "/", function: "" },
     { name: "Testing", route: "/testing", function: "" },
     { name: "Ping wheel", route: "/pingWheel", function: "" },
@@ -67,7 +68,7 @@ const navButtonsArray: routeButton[] = [
 
 .router-content {
     background: var(--component-b-color);
-    border-radius: 10px;
+    border-radius: var(--common-border-radius);
     box-shadow: 0px 0px 15px var(--accent-color);
     overflow: hidden;
 }
