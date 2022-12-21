@@ -14,12 +14,12 @@ export let mainWindow: BrowserWindow | null = null
 function createWindow() {
   console.log('CREATING WINDOW')
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
+    width: 1400,
+    height: 900,
     icon: path.join(__dirname, 'icons/icon.ico'),
     autoHideMenuBar: false,
     useContentSize: true,
-    resizable: true,
+    resizable: false,
     webPreferences: {
       preload: join(__dirname, 'preload.js'),
       nodeIntegration: false,

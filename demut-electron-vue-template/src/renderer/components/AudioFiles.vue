@@ -58,9 +58,6 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
           </div>
         </div>
       </div>
-      <!--             <div class="col-8 row-24 main-container-upper-right">
-                <div class="col-24 row-24 audio-clip-data-window"></div>
-            </div> -->
     </div>
     <div class="col-24 row-7 main-container-lower">
       <div
