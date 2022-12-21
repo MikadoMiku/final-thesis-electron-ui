@@ -1,4 +1,38 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { isFor } from '@babel/types'
+import { ref } from 'vue'
+import { sendMsg } from '../communication/communicator'
+
+const stringToSynthesize = ref('')
+const synthesizeFilename = ref('')
+const isFilenameError = ref(false)
+const isTextError = ref(false)
+
+function startSynthesizingText() {
+  if (!stringToSynthesize.value) {
+    isTextError.value = true
+    return
+  }
+  if (!synthesizeFilename.value) {
+    isFilenameError.value = true
+    return
+  }
+  synthesizeFilename.value = synthesizeFilename.value.replaceAll(/\s/g, '-')
+  sendMsg({
+    type: 'synthesizeTextToAudioFile',
+    payload: {
+      newFilename: synthesizeFilename.value,
+      textToSynthesize: stringToSynthesize.value
+    }
+  })
+  clearInputs()
+}
+
+function clearInputs() {
+  synthesizeFilename.value = ''
+  stringToSynthesize.value = ''
+}
+</script>
 <template>
   <div class="tts-page-container">
     <div class="tts-text-container row-5 col-24">
@@ -7,19 +41,52 @@
         you can write the text you want to be converted into a robotic voice.
       </p>
     </div>
-    <div class="row-3 col-24"></div>
+    <div class="row-3 col-24 filename-input-container">
+      <input
+        class="filename-input"
+        type="text"
+        :maxlength="20"
+        :placeholder="'Enter file name'"
+        v-model="synthesizeFilename" />
+    </div>
     <div class="tts-input-container row-12 col-24">
       <div class="tts-input-box row-24 col-24">
-        <textarea :maxlength="300" class="tts-input-area"></textarea>
+        <textarea
+          :maxlength="300"
+          class="tts-input-area"
+          v-model="stringToSynthesize"></textarea>
       </div>
     </div>
-    <div class="tts-input-buttons row-2 col-24">
-      <button class="tts-button warning">Clear</button>
-      <button class="tts-button success">Synthesize</button>
+    <div class="tts-input-buttons row-3 col-24">
+      <button class="tts-button warning" @click="clearInputs">Clear</button>
+      <button class="tts-button success" @click="startSynthesizingText">
+        Synthesize
+      </button>
     </div>
   </div>
 </template>
 <style scoped>
+.filename-input-container {
+  position: relative;
+}
+.filename-input {
+  height: 50%;
+  width: 30%;
+  background-color: var(--component-b-color-light);
+  border: none;
+  color: var(--accent-color);
+  font-size: var(--M-font-size);
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  right: 35%;
+}
+
+.filename-input:focus {
+  outline: none;
+  box-shadow: 0px 0px 15px var(--accent-color);
+}
+
 .tts-page-container {
   height: 100%;
   width: 100%;
@@ -71,10 +138,11 @@
   padding-right: 15px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .tts-button {
-  height: 100%;
+  height: 70%;
   width: 140px;
   font-size: var(--M-font-size);
   color: white;
@@ -93,7 +161,7 @@
 }
 
 .success {
-  box-shadow: 0px 4px 2px -2px rgba(36, 236, 36, 0.849);
+  box-shadow: 0px 4px 2px -2px rgba(35, 207, 35, 0.849);
 }
 
 /* width */

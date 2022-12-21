@@ -2,7 +2,8 @@ import {
   AudioEndpoint,
   CopyableFile,
   FileStats,
-  NativeMouseEventData
+  NativeMouseEventData,
+  TextSynthesizeData
 } from './api-payload-types'
 
 export type PlayClip = { type: 'playClip'; payload: string }
@@ -25,6 +26,11 @@ export type DragAndDropAudioFiles = {
 
 export type GetDataOfClipFiles = { type: 'getDataOfClipFiles' }
 
+export type SynthesizeTextToAudioFile = {
+  type: 'synthesizeTextToAudioFile'
+  payload: TextSynthesizeData
+}
+
 export type UiToBackEventSet =
   | PlayClip
   | GetAudioEndpoints
@@ -33,8 +39,9 @@ export type UiToBackEventSet =
   | StopClip
   | GetAudioClipNames
   | GetDataOfClipFiles
+  | SynthesizeTextToAudioFile
 
-/* ---------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------- To UI ------------------------------------------------------- */
 
 export type DataOfClipFiles = { type: 'dataOfClipFiles'; payload: FileStats[] }
 

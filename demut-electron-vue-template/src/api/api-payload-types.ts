@@ -20,3 +20,8 @@ export interface NativeMouseEventData {
   mouseY: number
   sector: number
 }
+
+export interface TextSynthesizeData {
+  textToSynthesize: string
+  newFilename: string
+}

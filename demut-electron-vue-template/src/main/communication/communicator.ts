@@ -43,6 +43,12 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         getDataOfFiles()
         startAudioCLipFilesDirWatcher()
         break
+      case 'synthesizeTextToAudioFile':
+        nativeDemutAddon.synthesizeTextToAudioFile(
+          msg.payload.textToSynthesize,
+          msg.payload.newFilename
+        )
+        break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')
     }
