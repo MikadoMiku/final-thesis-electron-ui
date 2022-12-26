@@ -1,4 +1,4 @@
-import { ipcMain, IpcMainEvent } from 'electron'
+import { ipcMain, IpcMainEvent, ipcRenderer } from 'electron'
 import { BackToUiEventSet, UiToBackEventSet } from '../../api/api-messages'
 import nativeDemutAddon, { mainWindow } from '../main'
 import { copyFile } from 'fs/promises'
@@ -48,6 +48,10 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
           msg.payload.textToSynthesize,
           msg.payload.newFilename
         )
+        break
+      case 'synthesizeVoiceFromText':
+        nativeDemutAddon.simulateVoice(msg.payload)
+        ipcRenderer.send('synthesizeVoice')
         break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')

@@ -4,7 +4,8 @@ import MainPage from './components/MainPage.vue'
 </script>
 
 <template>
-  <MainPage></MainPage>
+  <!--   <MainPage></MainPage> -->
+  <RouterView></RouterView>
 </template>
 
 <style>
@@ -26,8 +27,8 @@ import MainPage from './components/MainPage.vue'
   --linear-b-color: linear-gradient(0deg, black -5%, #171717);
   --row-amount: 24;
   --col-amount: 24;
-  --system-ui: 'inter-light', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --system-ui: 'inter-light', system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 html,

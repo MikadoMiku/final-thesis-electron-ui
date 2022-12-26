@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { isFor } from '@babel/types'
 import { ref } from 'vue'
 import { sendMsg } from '../communication/communicator'
 

@@ -1,4 +1,11 @@
-import { app, BrowserWindow, ipcMain, session, shell } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  globalShortcut,
+  ipcMain,
+  session,
+  shell
+} from 'electron'
 import { join } from 'path'
 import path from 'path'
 import { sendMsg, setupCommunicator } from './communication/communicator'
@@ -10,6 +17,8 @@ export default nativeDemutAddon
 export let configuration
 
 export let mainWindow: BrowserWindow | null = null
+export let overlayWindow: BrowserWindow | null = null
+let overlayWindowShown = false
 
 function createWindow() {
   console.log('CREATING WINDOW')
@@ -27,8 +36,33 @@ function createWindow() {
     }
   })
 
+  overlayWindow = new BrowserWindow({
+    height: 200,
+    width: 600,
+    alwaysOnTop: true,
+    autoHideMenuBar: true,
+    resizable: false,
+    transparent: true,
+    frame: false,
+    kiosk: true,
+    webPreferences: {
+      preload: join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true
+    }
+  })
+  overlayWindow.hide()
+  /*   overlayWindow.on('show', () => {
+    setTimeout(() => {
+      app.focus({ steal: true })
+    }, 1500)
+    setTimeout(() => {
+      overlayWindow!.focus()
+    }, 3000)
+  }) */
   if (process.env.NODE_ENV === 'development') {
     const rendererPort = process.argv[2]
+    overlayWindow.loadURL(`http://localhost:${rendererPort}/#/overlay`)
     mainWindow.loadURL(`http://localhost:${rendererPort}`)
   } else {
     mainWindow.loadFile(join(app.getAppPath(), 'renderer', 'index.html'))
@@ -71,7 +105,10 @@ app.whenReady().then(() => {
   setupCommunicator()
   console.log('SENDING MESSAGE TO UI')
   nativeDemutAddon.startMouseListener((x: number, y: number, s: number) =>
-    sendMsg({ type: 'nativeMouseEvent', payload: { mouseX: x, mouseY: y, sector: s } })
+    sendMsg({
+      type: 'nativeMouseEvent',
+      payload: { mouseX: x, mouseY: y, sector: s }
+    })
   )
   /* mainWindow?.webContents.on("did-finish-load", () => {
         mainWindow?.webContents.send("message-from-back", { type: "poop" })
@@ -93,6 +130,18 @@ app.whenReady().then(() => {
       createWindow()
     }
   })
+
+  globalShortcut.register('f9', () => {
+    console.log('f9')
+    if (!overlayWindowShown) {
+      overlayWindow?.show()
+      overlayWindow?.focus()
+      overlayWindowShown = true
+      return
+    }
+    overlayWindow?.hide()
+    overlayWindowShown = false
+  })
 })
 
 app.on('window-all-closed', function () {
@@ -101,4 +150,15 @@ app.on('window-all-closed', function () {
 
 ipcMain.on('message', (event, message) => {
   console.log(message)
+})
+
+ipcMain.on('synthesizeVoice', () => {
+  if (!overlayWindowShown) {
+    overlayWindow?.show()
+    overlayWindow?.focus()
+    overlayWindowShown = true
+    return
+  }
+  overlayWindow?.hide()
+  overlayWindowShown = false
 })

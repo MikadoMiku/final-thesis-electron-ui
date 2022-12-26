@@ -31,6 +31,11 @@ export type SynthesizeTextToAudioFile = {
   payload: TextSynthesizeData
 }
 
+export type SynthesizeVoiceFromText = {
+  type: 'synthesizeVoiceFromText'
+  payload: string
+}
+
 export type UiToBackEventSet =
   | PlayClip
   | GetAudioEndpoints
@@ -40,6 +45,7 @@ export type UiToBackEventSet =
   | GetAudioClipNames
   | GetDataOfClipFiles
   | SynthesizeTextToAudioFile
+  | SynthesizeVoiceFromText
 
 /* --------------------------------------------- To UI ------------------------------------------------------- */
 
