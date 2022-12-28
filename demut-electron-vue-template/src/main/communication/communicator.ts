@@ -51,7 +51,7 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         break
       case 'synthesizeVoiceFromText':
         nativeDemutAddon.simulateVoice(msg.payload)
-        ipcRenderer.send('synthesizeVoice')
+        ipcMain.emit('synthesizeVoice')
         break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')

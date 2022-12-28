@@ -29,7 +29,8 @@ function clearInputs() {
         :maxlength="500"
         autofocus
         class="overlay-text-input"
-        v-model="stringToSynthesize"></textarea>
+        v-model="stringToSynthesize"
+        @keydown.enter.prevent="startSynthesizingText"></textarea>
     </div>
     <div class="overlay-input-buttons row-8 col-24">
       <button class="overlay-input-button warning" @click="clearInputs">
