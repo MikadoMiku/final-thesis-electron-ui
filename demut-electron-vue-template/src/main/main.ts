@@ -8,8 +8,9 @@ import {
 } from 'electron'
 import { join } from 'path'
 import path from 'path'
-import { sendMsg, setupCommunicator } from './communication/communicator'
+import { setupCommunicator } from './communication/communicator'
 import fs from 'fs'
+import { BackToUiEventSet } from '../api/api-messages'
 
 const nativeDemutAddon = require('C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints')
 export default nativeDemutAddon
@@ -21,20 +22,35 @@ export let overlayWindow: BrowserWindow | null = null
 let overlayWindowShown = false
 
 function createWindow() {
-  console.log('CREATING WINDOW')
-  mainWindow = new BrowserWindow({
-    width: 1400,
-    height: 900,
-    icon: path.join(__dirname, 'icons/icon.ico'),
-    autoHideMenuBar: false,
-    useContentSize: true,
-    resizable: false,
-    webPreferences: {
-      preload: join(__dirname, 'preload.js'),
-      nodeIntegration: false,
-      contextIsolation: true
-    }
-  })
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow = new BrowserWindow({
+      width: 1400,
+      height: 900,
+      icon: path.join(__dirname, 'icons/icon.ico'),
+      autoHideMenuBar: false,
+      useContentSize: true,
+      resizable: false,
+      webPreferences: {
+        preload: join(__dirname, 'preload.js'),
+        nodeIntegration: false,
+        contextIsolation: true
+      }
+    })
+  } else {
+    mainWindow = new BrowserWindow({
+      width: 1400,
+      height: 900,
+      icon: path.join(__dirname, 'icons/icon.ico'),
+      autoHideMenuBar: true,
+      useContentSize: true,
+      resizable: false,
+      webPreferences: {
+        preload: join(__dirname, 'preload.js'),
+        nodeIntegration: false,
+        contextIsolation: true
+      }
+    })
+  }
 
   overlayWindow = new BrowserWindow({
     height: 200,
@@ -51,24 +67,23 @@ function createWindow() {
       contextIsolation: true
     }
   })
+
+  mainWindow.on('close', () => {
+    overlayWindow?.close()
+  })
+
   overlayWindow.hide()
-  /*   overlayWindow.on('show', () => {
-    setTimeout(() => {
-      app.focus({ steal: true })
-    }, 1500)
-    setTimeout(() => {
-      overlayWindow!.focus()
-    }, 3000)
-  }) */
   if (process.env.NODE_ENV === 'development') {
     const rendererPort = process.argv[2]
     overlayWindow.loadURL(`http://localhost:${rendererPort}/#/overlay`)
     mainWindow.loadURL(`http://localhost:${rendererPort}`)
+    mainWindow.webContents.openDevTools()
   } else {
     mainWindow.loadFile(join(app.getAppPath(), 'renderer', 'index.html'))
+    overlayWindow.loadFile(join(app.getAppPath(), 'renderer', 'index.html'))
+    // overlayWindow.loadURL(join(app.getAppPath(), 'renderer', 'index.html?route=overlay'))
   }
   // Automatically open chromium dev tools when opening app
-  mainWindow.webContents.openDevTools()
   // When opening an external link in the app, use pc default browser instead of opening it in the app.
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url)
@@ -99,21 +114,9 @@ function loadConfigurationFromJson() {
 }
 
 app.whenReady().then(() => {
-  console.log('LOADING CONFIGURATION')
   loadConfigurationFromJson()
   createWindow()
   setupCommunicator()
-  console.log('SENDING MESSAGE TO UI')
-  nativeDemutAddon.startMouseListener((x: number, y: number, s: number) =>
-    sendMsg({
-      type: 'nativeMouseEvent',
-      payload: { mouseX: x, mouseY: y, sector: s }
-    })
-  )
-  /* mainWindow?.webContents.on("did-finish-load", () => {
-        mainWindow?.webContents.send("message-from-back", { type: "poop" })
-    }) */
-
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {
@@ -132,7 +135,9 @@ app.whenReady().then(() => {
   })
 
   globalShortcut.register('f9', () => {
-    console.log('f9')
+    overlayWindow?.webContents.send('message-from-back', {
+      type: 'overlayRouterPush'
+    } as BackToUiEventSet)
     if (!overlayWindowShown) {
       overlayWindow?.show()
       overlayWindow?.focus()
@@ -140,12 +145,14 @@ app.whenReady().then(() => {
       return
     }
     overlayWindow?.hide()
+    mainWindow?.focus()
     overlayWindowShown = false
   })
 })
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
+  return
 })
 
 ipcMain.on('message', (event, message) => {
@@ -154,9 +161,6 @@ ipcMain.on('message', (event, message) => {
 
 ipcMain.on('synthesizeVoice', () => {
   if (!overlayWindowShown) {
-    overlayWindow?.show()
-    overlayWindow?.focus()
-    overlayWindowShown = true
     return
   }
   overlayWindow?.hide()

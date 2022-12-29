@@ -68,9 +68,14 @@ export type NativeMouseEvent = {
   payload: NativeMouseEventData
 }
 
+export type OverlayRouterPush = {
+  type: 'overlayRouterPush'
+}
+
 export type BackToUiEventSet =
   | AudioClipNames
   | AudioEndpoints
   | DragAndDropAudioFilesDone
   | NativeMouseEvent
   | DataOfClipFiles
+  | OverlayRouterPush

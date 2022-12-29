@@ -15,13 +15,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faFile)
 // ----------------------------------------------- ----------------------------------
 
-
-setupCommunicator()
-
-const router = createRouter({
+export const router = createRouter({
     history: createWebHashHistory(),
     routes,
 })
+
+setupCommunicator()
+
 
 const app = createApp(App)
 

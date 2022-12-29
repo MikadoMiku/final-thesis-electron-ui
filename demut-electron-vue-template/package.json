@@ -1,7 +1,7 @@
 {
-  "name": "electron-vue-template",
+  "name": "demut",
   "version": "0.1.0",
-  "description": "A minimal Electron + Vue application",
+  "description": "A game support application for people with difficulties communicating",
   "main": "build/main/main/main.js",
   "scripts": {
     "dev": "node scripts/dev-server.js",
@@ -10,16 +10,15 @@
     "build:mac": "node scripts/build.js && electron-builder -c config/electron-builder.json --mac",
     "build:linux": "node scripts/build.js && electron-builder -c config/electron-builder.json --linux"
   },
-  "repository": "https://github.com/deluze/electron-vue-template",
+  "repository": "https://github.com/MikadoMiku/final-thesis-electron-ui",
   "author": {
-    "name": "Deluze",
-    "url": "https://github.com/Deluze"
+    "name": "Mihkel Riik",
+    "url": "https://github.com/MikadoMiku"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/cli": "^5.0.1",
     "chalk": "^4.1.2",
-    "chokidar": "^3.5.3",
     "electron": "^20.1.0",
     "electron-builder": "^23.3.3",
     "prettier": "^2.7.1",
@@ -32,6 +31,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.1",
+    "chokidar": "^3.5.3",
     "pinia": "^2.0.22",
     "vue": "^3.2.36",
     "vue-router": "4"
