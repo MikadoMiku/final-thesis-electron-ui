@@ -51,6 +51,17 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         nativeDemutAddon.simulateVoice(msg.payload)
         ipcMain.emit('synthesizeVoice')
         break
+      case 'startMouseListener':
+        nativeDemutAddon.startMouseListener((x: number, y: number, s: number) =>
+          sendMsg({
+            type: 'nativeMouseEvent',
+            payload: { mouseX: x, mouseY: y, sector: s }
+          })
+        )
+        break
+      case 'stopMouseListener':
+        nativeDemutAddon.stopMouseListener()
+        break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')
     }

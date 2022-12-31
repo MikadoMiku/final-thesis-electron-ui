@@ -1,8 +1,5 @@
 import { defineStore } from 'pinia'
-import {
-  AudioEndpoint,
-  NativeMouseEventData
-} from '../../api/api-payload-types'
+import { NativeMouseEventData } from '../../api/api-payload-types'
 import { sendMsg } from '../communication/communicator'
 import { PingwheelStoreFunctions } from './storeTypings/audioEndpointStoreTypes'
 
@@ -46,12 +43,13 @@ export const usePingwheelStore = defineStore({
       [5, 'suck_my_ass'],
       [6, 'urARtrd'],
       [7, 'void'],
-      [8, 'void']
-    ]) as Map<number, string>
+      [8, 'sharks']
+    ]) as Map<number, string>,
+    toggled: false
   }),
   actions: {
     [FUNCTIONS.NATIVE_MOUSE_EVENT](payload: NativeMouseEventData) {
-      console.table(payload)
+      console.log(JSON.stringify(payload))
       let sectoredClip: string | undefined =
         this.configuredPingwheelAudioClips.get(payload.sector)
       if (sectoredClip) {
@@ -61,5 +59,8 @@ export const usePingwheelStore = defineStore({
         })
       }
     }
+    /*     [FUNCTIONS.SET_PINGWHEEL_CLIP](payload: { sector: number; clip: string }) {
+      this.configuredPingwheelAudioClips.set(payload.sector, payload.clip)
+    } */
   }
 })

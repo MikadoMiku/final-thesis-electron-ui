@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import Header from "./Header.vue"
 import MainNavMenu, { type routeButton } from "./MainNavMenu.vue"
-import { computed, ref } from "vue"
 
 const navButtonsArray: routeButton[] = [
     { name: "Home", route: "/", function: "" },
     { name: "Audio endpoints", route: "/audioEndpoints", function: "" },
     { name: "Audio files", route: "/audioFiles", function: "" },
     { name: "Generate audio files", route: "/textToSpeech", function: "" },
-    { name: "Audio macros", route: "/", function: "" },
-    { name: "Testing", route: "/testing", function: "" },
+    // { name: "Audio macros", route: "/", function: "" },
+    // { name: "Testing", route: "/testing", function: "" },
     { name: "Ping wheel", route: "/pingWheel", function: "" },
 ]
 </script>

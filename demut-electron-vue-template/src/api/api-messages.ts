@@ -34,6 +34,12 @@ export type SynthesizeVoiceFromText = {
   payload: string
 }
 
+export type StartMouseListener = {
+  type: 'startMouseListener'
+}
+
+export type StopMouseListener = { type: 'stopMouseListener' }
+
 export type UiToBackEventSet =
   | PlayClip
   | GetAudioEndpoints
@@ -43,6 +49,8 @@ export type UiToBackEventSet =
   | GetDataOfClipFiles
   | SynthesizeTextToAudioFile
   | SynthesizeVoiceFromText
+  | StartMouseListener
+  | StopMouseListener
 
 /* --------------------------------------------- To UI ------------------------------------------------------- */
 

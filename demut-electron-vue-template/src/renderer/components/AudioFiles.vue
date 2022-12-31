@@ -3,6 +3,7 @@ import { sendMsg } from '../communication/communicator'
 import { computed, onMounted, ref } from 'vue'
 import { CopyableFile } from '../../api/api-payload-types'
 import { useAudioClipsStore } from '../stores/audioClipStore'
+import DropdownMenu from './DropdownMenu.vue'
 
 onMounted(() => {
   sendMsg({ type: 'getDataOfClipFiles' })
@@ -35,6 +36,7 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
                 <tr>
                   <th class="label">Name</th>
                   <th class="label">Extension</th>
+                  <th class="label">Sector</th>
                   <th class="label">Size</th>
                 </tr>
               </thead>
@@ -44,13 +46,16 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
                     class="row"
                     v-for="clipFile in audioFilesData"
                     :key="clipFile.name">
-                    <td class="second-td">
+                    <td class="first-td">
                       {{ clipFile.name }}
                     </td>
-                    <td class="right third-td">
+                    <td class="second-td">
                       {{ clipFile.extension }}
                     </td>
-                    <td class="right fourth-td">{{ clipFile.size }} KB</td>
+                    <td class="right third-td">
+                      <DropdownMenu :dropdownForFile="clipFile.name"></DropdownMenu>
+                    </td>
+                    <td class="fourth-td">{{ clipFile.size }} KB</td>
                   </tr>
                 </TransitionGroup>
               </tbody>
@@ -84,20 +89,20 @@ th {
 .label {
   text-align: center;
 }
+
 .first-td {
-  width: 5%;
+  width: 50%;
 }
 .second-td {
-  width: 20%;
+  width: 10%;
+  text-align: center;
 }
 .third-td {
   width: 5%;
 }
 .fourth-td {
   width: 15%;
-}
-.fifth-td {
-  width: 55%;
+  text-align: center;
 }
 
 .row > td {
