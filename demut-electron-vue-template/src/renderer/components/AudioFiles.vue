@@ -23,6 +23,11 @@ function onFileDrop(event: DragEvent) {
     })
   })
 }
+
+function funion() {
+  sendMsg({ type: 'openAudioclipFolder' })
+}
+
 const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
 </script>
 <template>
@@ -53,7 +58,8 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
                       {{ clipFile.extension }}
                     </td>
                     <td class="right third-td">
-                      <DropdownMenu :dropdownForFile="clipFile.name"></DropdownMenu>
+                      <DropdownMenu
+                        :dropdownForFile="clipFile.name"></DropdownMenu>
                     </td>
                     <td class="fourth-td">{{ clipFile.size }} KB</td>
                   </tr>
@@ -70,12 +76,39 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
         @drop="onFileDrop"
         @dragenter.prevent
         @dragover.prevent>
+        <div class="arrow-right" @click="funion">
+          <span>Open</span>
+        </div>
         <p class="drag-file-upload-hint">Drag & Drop files</p>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+/* https://codepen.io/alexmccabe/pen/nezONg */
+.arrow-right {
+  background-color: #444;
+  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.8);
+  height: 120px;
+  left: -60px;
+  position: absolute;
+  top: -60px;
+  width: 130px;
+
+  transform: rotate(-45deg);
+  z-index: 100;
+  cursor: pointer;
+}
+
+.arrow-right span {
+  color: #f5f5f5;
+  font-size: 1.005em;
+  left: 38px;
+  top: 88px;
+  position: absolute;
+  width: 70px;
+}
+
 th {
   position: sticky;
   background: var(--component-b-color);
@@ -126,11 +159,8 @@ th {
   border-collapse: collapse;
 }
 
-.audio-files-main-container {
-  --component-padding: 2%;
-}
-
 .main-container-upper-left {
+  z-index: 101;
   padding: var(--component-padding);
 }
 
@@ -166,6 +196,8 @@ th {
   box-shadow: 0px 0px 1px 1px var(--accent-color);
   display: flex;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .drag-file-upload-hint {

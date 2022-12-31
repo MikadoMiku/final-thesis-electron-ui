@@ -29,6 +29,7 @@ import MainPage from './components/MainPage.vue'
   --col-amount: 24;
   --system-ui: 'inter-light', system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --component-padding: 15px;
 }
 
 html,

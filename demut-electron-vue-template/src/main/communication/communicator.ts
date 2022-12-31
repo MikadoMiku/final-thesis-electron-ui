@@ -5,6 +5,7 @@ import { copyFile } from 'fs/promises'
 import { AudioEndpoint, CopyableFile } from '../../api/api-payload-types'
 import {
   getDataOfFiles,
+  openAudioclipFolder,
   startAudioCLipFilesDirWatcher
 } from './communicatorFunctions'
 import path from 'path'
@@ -61,6 +62,9 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         break
       case 'stopMouseListener':
         nativeDemutAddon.stopMouseListener()
+        break
+      case 'openAudioclipFolder':
+        openAudioclipFolder()
         break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')

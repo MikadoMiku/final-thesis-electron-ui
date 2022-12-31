@@ -3,7 +3,7 @@ import { FileStats } from '../../api/api-payload-types'
 import path from 'path'
 import { sendMsg } from './communicator'
 import fileWatcher from 'chokidar'
-import { configuration } from '../main'
+import { exec } from 'child_process'
 
 let audioClipsFileWatcher: fileWatcher.FSWatcher
 
@@ -61,4 +61,24 @@ export function startAudioCLipFilesDirWatcher() {
 
 export function stopAudioCLipFilesDirWatcher() {
   audioClipsFileWatcher.close()
+}
+
+export function openAudioclipFolder() {
+  let openFolder
+  if (process.env.NODE_ENV === 'development') {
+    openFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
+  } else {
+    openFolder = path.join(
+      path.join(process?.env?.ProgramData!, '\\Demut'),
+      '\\DEMUT_WAV_CLIPS'
+    )
+  }
+  exec(`start ${openFolder}`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error: ${error}`)
+      return
+    }
+    console.log(`stdout: ${stdout}`)
+    console.log(`stderr: ${stderr}`)
+  })
 }

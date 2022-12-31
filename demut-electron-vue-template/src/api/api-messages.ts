@@ -40,6 +40,8 @@ export type StartMouseListener = {
 
 export type StopMouseListener = { type: 'stopMouseListener' }
 
+export type OpenAudioclipFolder = { type: 'openAudioclipFolder' }
+
 export type UiToBackEventSet =
   | PlayClip
   | GetAudioEndpoints
@@ -51,6 +53,7 @@ export type UiToBackEventSet =
   | SynthesizeVoiceFromText
   | StartMouseListener
   | StopMouseListener
+  | OpenAudioclipFolder
 
 /* --------------------------------------------- To UI ------------------------------------------------------- */
 

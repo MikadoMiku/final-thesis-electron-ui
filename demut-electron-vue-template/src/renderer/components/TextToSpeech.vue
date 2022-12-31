@@ -112,7 +112,7 @@ function clearInputs() {
 }
 
 .functionality-desc {
-  font-size: var(--font-size);
+  font-size: var(--L-font-size);
   padding: 15px;
   background-color: var(--component-b-color-light);
   border-radius: var(--common-border-radius);
@@ -148,11 +148,11 @@ function clearInputs() {
   border: none;
   cursor: pointer;
   background-color: var(--component-b-color-light);
+  align-self: flex-end;
 }
 
 .tts-button:hover {
-  background-color: var(--component-b-color-light);
-  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.274);
 }
 
 .warning {

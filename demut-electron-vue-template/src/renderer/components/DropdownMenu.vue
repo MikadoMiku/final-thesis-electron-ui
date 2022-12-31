@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { usePingwheelStore } from '../stores/pingwheelStore'
+// https://codepen.io/wslotterback/pen/mmRrVx
 
 const showMenu = ref(false)
 
@@ -19,7 +20,6 @@ function itemClicked(sector: number) {
     sector,
     props.dropdownForFile
   )
-  console.log('clicked dropdown')
 }
 
 const dropdownText = computed(() => {
@@ -57,9 +57,7 @@ const dropdownText = computed(() => {
   color: #fff;
   background-color: var(--component-b-color);
 }
-/*   --component-b-color: rgb(14, 13, 13);
-  --component-b-color-light: rgb(23, 23, 23);
-  --linear-b-color: linear-gradient(0deg, black -5%, #171717); */
+
 .anchor::after {
   display: inline-block;
   width: 0;

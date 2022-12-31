@@ -50,8 +50,9 @@ export const usePingwheelStore = defineStore({
   actions: {
     [FUNCTIONS.NATIVE_MOUSE_EVENT](payload: NativeMouseEventData) {
       console.log(JSON.stringify(payload))
+      let sector = payload.sector == 1 ? 8 : payload.sector - 1
       let sectoredClip: string | undefined =
-        this.configuredPingwheelAudioClips.get(payload.sector)
+        this.configuredPingwheelAudioClips.get(sector)
       if (sectoredClip) {
         sendMsg({
           type: 'playClip',
