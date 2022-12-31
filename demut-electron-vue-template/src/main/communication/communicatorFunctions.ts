@@ -10,14 +10,23 @@ let audioClipsFileWatcher: fileWatcher.FSWatcher
 export async function getDataOfFiles() {
   // Should come from config that can be edited by user...
   //const testFolder = "C:/Users/power/Desktop/DEMUT_WAV_CLIPS"
-  const testFolder = configuration.defaultAudioClipDir
+  // const testFolder = configuration.defaultAudioClipDir
+  let testFolder
+  if (process.env.NODE_ENV === 'development') {
+    testFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
+  } else {
+    testFolder = path.join(
+      path.join(process?.env?.ProgramData!, '\\Demut'),
+      '\\DEMUT_WAV_CLIPS'
+    )
+  }
   const files = fs.readdirSync(testFolder, 'utf8')
   let res: FileStats[] = []
   for (let file of files) {
     const extension = path.extname(file)
     const fileStats = fs.statSync(testFolder + '/' + file)
     res.push({
-      name: file,
+      name: path.parse(file).name,
       extension,
       size: fileStats.size / 1000,
       creationTime: fileStats.birthtime.toString()
@@ -27,20 +36,26 @@ export async function getDataOfFiles() {
 }
 
 export function startAudioCLipFilesDirWatcher() {
-  audioClipsFileWatcher = fileWatcher.watch(configuration.defaultAudioClipDir, {
+  let watchedFolder
+  if (process.env.NODE_ENV === 'development') {
+    watchedFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
+  } else {
+    watchedFolder = path.join(
+      path.join(process?.env?.ProgramData!, '\\Demut'),
+      '\\DEMUT_WAV_CLIPS'
+    )
+  }
+  audioClipsFileWatcher = fileWatcher.watch(watchedFolder, {
     persistent: true
   })
   audioClipsFileWatcher.on('add', (path) => {
     getDataOfFiles()
-    console.log(`File ${path} has been added`)
   })
   audioClipsFileWatcher.on('change', (path) => {
     getDataOfFiles()
-    console.log(`File ${path} has been changed`)
   })
   audioClipsFileWatcher.on('unlink', (path) => {
     getDataOfFiles()
-    console.log(`File ${path} has been removed`)
   })
 }
 

@@ -7,6 +7,7 @@ import {
   getDataOfFiles,
   startAudioCLipFilesDirWatcher
 } from './communicatorFunctions'
+import path from 'path'
 
 export function setupCommunicator() {
   console.log('SETTING UP COMMUNICATOR')
@@ -23,9 +24,6 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         break
       case 'stopClip':
         stopSong()
-        break
-      case 'getAudioClipNames':
-        nativeDemutAddon.listAudioClips()
         break
       case 'playClip':
         nativeDemutAddon.playClip(msg.payload)
@@ -62,12 +60,18 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
 }
 
 async function addFilesToApp(filePaths: CopyableFile[]) {
+  let testDragFolder
+  if (process.env.NODE_ENV === 'development') {
+    testDragFolder = 'C:/Users/power/Desktop/Demut_test_file_drag/'
+  } else {
+    testDragFolder = path.join(
+      path.join(process?.env?.ProgramData!, '\\Demut'),
+      '\\DEMUT_WAV_CLIPS\\'
+    )
+  }
   try {
     for (const file of filePaths) {
-      await copyFile(
-        file.filePath,
-        'C:/Users/power/Desktop/Demut_test_file_drag/' + file.fileName
-      )
+      await copyFile(file.filePath, testDragFolder + file.fileName)
     }
   } catch (e) {
     console.log(e)

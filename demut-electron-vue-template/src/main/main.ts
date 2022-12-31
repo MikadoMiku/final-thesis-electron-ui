@@ -95,9 +95,9 @@ function loadConfigurationFromJson() {
   try {
     const filepath = path.join(
       process.env.NODE_ENV !== 'development'
-        ? path.join(process?.env?.ProgramData!, '\\demut\\') // Windows specific!
+        ? path.join(process?.env?.ProgramData!, '\\Demut\\') // Windows specific!
         : path.join(process.cwd(), '\\config\\'),
-      'app-config.json'
+      process.env.NODE_ENV !== 'development' ? 'config.json' : 'app-config.json'
     )
     configuration = JSON.parse(fs.readFileSync(filepath).toString())
     if (!configuration.securityModule) {

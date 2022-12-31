@@ -19,6 +19,9 @@ Source: ..\demut-electron-vue-template\dist\win-unpacked\*; DestDir: "{app}"; Fl
 Source: ..\demut-electron-vue-template\config\app-config.json; DestDir: "{commonappdata}\{#APPNAME}"; DestName: config.json; Flags: onlyifdoesntexist uninsneveruninstall
 Source: ..\demut-electron-vue-template\src\icons\icon.ico; DestDir: "{app}"
 
+[Dirs]
+Name: {commonappdata}\{#APPNAME}\DEMUT_WAV_CLIPS
+
 [Icons]
 Name: "{commondesktop}\{#APPNAME}"; FileName: "{app}\{#APPNAME}.exe"
 Name: "{commonstartup}\{#APPNAME}"; Filename: "{app}\{#APPNAME}.exe"

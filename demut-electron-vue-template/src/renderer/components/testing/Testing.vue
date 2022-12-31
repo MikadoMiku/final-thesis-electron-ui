@@ -10,10 +10,6 @@ function stopSongInC() {
     sendMsg({ type: "stopClip" })
 }
 
-function listAudioClips() {
-    sendMsg({ type: "getAudioClipNames" })
-}
-
 </script>
 <template>
     <div class="col-24 row-24 testing-dashboard-container">
@@ -29,14 +25,6 @@ function listAudioClips() {
                     </button>
                     <button class="col-12 row-24" @click="stopSongInC()">
                         Stop song
-                    </button>
-                </div>
-            </div>
-            <div class="col-24 row-24 testing-module">
-                <div class="col-16 row-24"></div>
-                <div class="col-8 row-24">
-                    <button class="col-12 row-24" @click="listAudioClips()">
-                        List files in console from clip dir
                     </button>
                 </div>
             </div>

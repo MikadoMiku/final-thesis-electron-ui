@@ -17,8 +17,6 @@ export type SetAudioEndpointId = {
   payload: string
 }
 
-export type GetAudioClipNames = { type: 'getAudioClipNames' }
-
 export type DragAndDropAudioFiles = {
   type: 'addClipFiles'
   payload: CopyableFile[]
@@ -42,7 +40,6 @@ export type UiToBackEventSet =
   | SetAudioEndpointId
   | DragAndDropAudioFiles
   | StopClip
-  | GetAudioClipNames
   | GetDataOfClipFiles
   | SynthesizeTextToAudioFile
   | SynthesizeVoiceFromText
