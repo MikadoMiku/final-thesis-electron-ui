@@ -1,5 +1,6 @@
 import {
   AudioEndpoint,
+  ConfigWriteDataTypes,
   CopyableFile,
   FileStats,
   NativeMouseEventData,
@@ -42,6 +43,13 @@ export type StopMouseListener = { type: 'stopMouseListener' }
 
 export type OpenAudioclipFolder = { type: 'openAudioclipFolder' }
 
+export type WriteToConfig = {
+  type: 'writeToConfig'
+  payload: ConfigWriteDataTypes
+}
+
+export type StopOverlay = { type: 'stopOverlay' }
+
 export type UiToBackEventSet =
   | PlayClip
   | GetAudioEndpoints
@@ -54,6 +62,8 @@ export type UiToBackEventSet =
   | StartMouseListener
   | StopMouseListener
   | OpenAudioclipFolder
+  | WriteToConfig
+  | StopOverlay
 
 /* --------------------------------------------- To UI ------------------------------------------------------- */
 
@@ -80,6 +90,11 @@ export type OverlayRouterPush = {
   type: 'overlayRouterPush'
 }
 
+export type SetConfiguredPingwheelClips = {
+  type: 'setConfiguredPingwheelClips'
+  payload: ConfigWriteDataTypes
+}
+
 export type BackToUiEventSet =
   | AudioClipNames
   | AudioEndpoints
@@ -87,3 +102,4 @@ export type BackToUiEventSet =
   | NativeMouseEvent
   | DataOfClipFiles
   | OverlayRouterPush
+  | SetConfiguredPingwheelClips

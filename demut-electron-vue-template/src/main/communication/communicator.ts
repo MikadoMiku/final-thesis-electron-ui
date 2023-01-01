@@ -6,12 +6,12 @@ import { AudioEndpoint, CopyableFile } from '../../api/api-payload-types'
 import {
   getDataOfFiles,
   openAudioclipFolder,
-  startAudioCLipFilesDirWatcher
+  startAudioCLipFilesDirWatcher,
+  writeToConfiguration
 } from './communicatorFunctions'
 import path from 'path'
 
 export function setupCommunicator() {
-  console.log('SETTING UP COMMUNICATOR')
   ipcMain.on('message-from-ui', handleMessage)
 }
 
@@ -52,6 +52,9 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         nativeDemutAddon.simulateVoice(msg.payload)
         ipcMain.emit('synthesizeVoice')
         break
+      case 'stopOverlay':
+        ipcMain.emit('synthesizeVoice')
+        break
       case 'startMouseListener':
         nativeDemutAddon.startMouseListener((x: number, y: number, s: number) =>
           sendMsg({
@@ -65,6 +68,9 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
         break
       case 'openAudioclipFolder':
         openAudioclipFolder()
+        break
+      case 'writeToConfig':
+        writeToConfiguration(msg.payload)
         break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')
@@ -98,6 +104,5 @@ function stopSong() {
 }
 
 export const sendMsg = (msg: BackToUiEventSet): void => {
-  console.log('saadan UI-le', msg)
   mainWindow?.webContents.send('message-from-back', msg)
 }

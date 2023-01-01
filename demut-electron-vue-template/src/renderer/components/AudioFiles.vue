@@ -24,7 +24,7 @@ function onFileDrop(event: DragEvent) {
   })
 }
 
-function funion() {
+function openAudioclipFolder() {
   sendMsg({ type: 'openAudioclipFolder' })
 }
 
@@ -76,7 +76,7 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
         @drop="onFileDrop"
         @dragenter.prevent
         @dragover.prevent>
-        <div class="arrow-right" @click="funion">
+        <div class="arrow-right" @click="openAudioclipFolder">
           <span>Open</span>
         </div>
         <p class="drag-file-upload-hint">Drag & Drop files</p>

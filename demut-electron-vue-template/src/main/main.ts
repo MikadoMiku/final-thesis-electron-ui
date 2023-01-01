@@ -12,7 +12,8 @@ import { setupCommunicator } from './communication/communicator'
 import fs from 'fs'
 import { BackToUiEventSet } from '../api/api-messages'
 
-const nativeDemutAddon = require('C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints')
+const nativeDemutAddon = require('C:\\Program Files (x86)\\Demut\\AudioEndpoints')
+// const nativeDemutAddon = require('C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints')
 export default nativeDemutAddon
 
 export let configuration
@@ -26,8 +27,8 @@ function createWindow() {
     mainWindow = new BrowserWindow({
       width: 1400,
       height: 900,
-      icon: path.join(__dirname, 'icons/icon.ico'),
       autoHideMenuBar: false,
+      title: 'Demut',
       useContentSize: true,
       resizable: false,
       webPreferences: {
@@ -40,7 +41,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
       width: 1400,
       height: 900,
-      icon: path.join(__dirname, 'icons/icon.ico'),
+      title: 'Demut',
       autoHideMenuBar: true,
       useContentSize: true,
       resizable: false,
@@ -100,14 +101,8 @@ function loadConfigurationFromJson() {
       process.env.NODE_ENV !== 'development' ? 'config.json' : 'app-config.json'
     )
     configuration = JSON.parse(fs.readFileSync(filepath).toString())
-    if (!configuration.securityModule) {
-      configuration.securityModule = {
-        constants: {
-          DELAYS: { default: 200, completed: 5000 }
-        }
-      }
-    }
-    console.log(`Full Config = ${JSON.stringify(configuration)}`)
+
+    //console.log(`Full Config = ${JSON.stringify(configuration)}`)
   } catch (e) {
     console.log(e)
   }
@@ -117,6 +112,12 @@ app.whenReady().then(() => {
   loadConfigurationFromJson()
   createWindow()
   setupCommunicator()
+  mainWindow?.webContents.once('dom-ready', () =>
+    mainWindow?.webContents.send('message-from-back', {
+      type: 'setConfiguredPingwheelClips',
+      payload: configuration.pingwheel
+    } as BackToUiEventSet)
+  )
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {
@@ -145,7 +146,7 @@ app.whenReady().then(() => {
       return
     }
     overlayWindow?.hide()
-    mainWindow?.focus()
+
     overlayWindowShown = false
   })
 })

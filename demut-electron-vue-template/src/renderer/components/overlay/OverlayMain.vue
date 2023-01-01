@@ -21,6 +21,10 @@ function startSynthesizingText() {
 function clearInputs() {
   stringToSynthesize.value = ''
 }
+
+function stopOverlay() {
+  sendMsg({ type: 'stopOverlay' })
+}
 </script>
 <template>
   <div class="welcome-page-container">
@@ -30,10 +34,11 @@ function clearInputs() {
         autofocus
         class="overlay-text-input"
         v-model="stringToSynthesize"
-        @keydown.enter.prevent="startSynthesizingText"></textarea>
+        @keydown.enter.prevent="startSynthesizingText"
+        @keydown.escape.prevent="stopOverlay"></textarea>
     </div>
     <div class="overlay-input-buttons row-8 col-24">
-      <button class="overlay-input-button warning" @click="clearInputs">
+      <button class="overlay-input-button warning" @click="stopOverlay">
         Cancel
       </button>
       <button

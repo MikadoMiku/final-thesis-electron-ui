@@ -1,9 +1,10 @@
 import fs from 'fs'
-import { FileStats } from '../../api/api-payload-types'
+import { ConfigWriteDataTypes, FileStats } from '../../api/api-payload-types'
 import path from 'path'
 import { sendMsg } from './communicator'
 import fileWatcher from 'chokidar'
 import { exec } from 'child_process'
+import { configuration } from '../main'
 
 let audioClipsFileWatcher: fileWatcher.FSWatcher
 
@@ -81,4 +82,24 @@ export function openAudioclipFolder() {
     console.log(`stdout: ${stdout}`)
     console.log(`stderr: ${stderr}`)
   })
+}
+
+export function writeToConfiguration(message: ConfigWriteDataTypes) {
+  try {
+    const filepath = path.join(
+      process.env.NODE_ENV !== 'development'
+        ? path.join(process?.env?.ProgramData!, '\\Demut\\') // Windows specific!
+        : path.join(process.cwd(), '\\config\\'),
+      process.env.NODE_ENV !== 'development' ? 'config.json' : 'app-config.json'
+    )
+    if (message.section == 'pingwheel') {
+      configuration.pingwheel = message.value
+    }
+    fs.writeFile(filepath, JSON.stringify(configuration), () =>
+      console.log('Writing to config file done.')
+    )
+    console.log(`Full Config = ${JSON.stringify(configuration)}`)
+  } catch (e) {
+    console.log(e)
+  }
 }

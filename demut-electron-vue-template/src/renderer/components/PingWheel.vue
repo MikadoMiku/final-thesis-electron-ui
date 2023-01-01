@@ -48,16 +48,16 @@ function playClip(arcNo: number) {
   if (clipName) sendMsg({ type: 'playClip', payload: clipName })
 }
 
-const toggle = ref(false)
+const toggle = computed(() => usePingwheelStore().toggled)
 
 function togglePingwheelUsage() {
   if (toggle.value) {
     sendMsg({ type: 'stopMouseListener' })
-    toggle.value = false
+    usePingwheelStore().toggled = false
     return
   }
   sendMsg({ type: 'startMouseListener' })
-  toggle.value = true
+  usePingwheelStore().toggled = true
 }
 </script>
 <template>

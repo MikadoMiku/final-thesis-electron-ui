@@ -16,7 +16,8 @@ function startSynthesizingText() {
     isFilenameError.value = true
     return
   }
-  synthesizeFilename.value = synthesizeFilename.value.replaceAll(/\s/g, '-')
+  synthesizeFilename.value = synthesizeFilename.value.replaceAll(/\s/g, '')
+  synthesizeFilename.value = synthesizeFilename.value.replaceAll(/[^\w\s]/gi, '')
   sendMsg({
     type: 'synthesizeTextToAudioFile',
     payload: {

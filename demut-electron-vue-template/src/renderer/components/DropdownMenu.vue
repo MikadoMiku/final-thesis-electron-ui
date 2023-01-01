@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { sendMsg } from '../communication/communicator'
 import { usePingwheelStore } from '../stores/pingwheelStore'
 // https://codepen.io/wslotterback/pen/mmRrVx
 
@@ -16,10 +17,29 @@ function toggleShow() {
 function itemClicked(sector: number) {
   toggleShow()
   if (!props.dropdownForFile) return
+  const listOfFiles = Array.from(
+    usePingwheelStore().configuredPingwheelAudioClips.entries()
+  )
+  const foundPrevious = listOfFiles.find((x) => x[1] === props.dropdownForFile)
+  if (foundPrevious) {
+    usePingwheelStore().configuredPingwheelAudioClips.set(
+      foundPrevious[0],
+      'void'
+    )
+  }
   usePingwheelStore().configuredPingwheelAudioClips.set(
     sector,
     props.dropdownForFile
   )
+  sendMsg({
+    type: 'writeToConfig',
+    payload: {
+      section: 'pingwheel',
+      value: Array.from(
+        usePingwheelStore().configuredPingwheelAudioClips.entries()
+      ).map(([sector, clipName]) => ({ sector, clipName }))
+    }
+  })
 }
 
 const dropdownText = computed(() => {

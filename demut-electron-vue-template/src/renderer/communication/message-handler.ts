@@ -31,6 +31,9 @@ export function handleMessage(_event: IpcRendererEvent, msg: BackToUiEventSet) {
   } else if (msg.type in usePingwheelStore()) {
     const store = usePingwheelStore()
     msg = msg as PingwheelStoreFunctions
-    store[msg.type](msg.payload)
+    if ('payload' in msg) {
+      store[msg.type](msg.payload as any)
+      return
+    }
   }
 }

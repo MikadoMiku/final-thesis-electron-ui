@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
-import { NativeMouseEventData } from '../../api/api-payload-types'
+import {
+  ConfigWriteDataTypes,
+  NativeMouseEventData
+} from '../../api/api-payload-types'
 import { sendMsg } from '../communication/communicator'
 import { PingwheelStoreFunctions } from './storeTypings/audioEndpointStoreTypes'
 
@@ -20,7 +23,8 @@ type F = {
 
 // Object as an enum, the Uppercase is more readable?.
 export const FUNCTIONS: F = {
-  NATIVE_MOUSE_EVENT: 'nativeMouseEvent'
+  NATIVE_MOUSE_EVENT: 'nativeMouseEvent',
+  SET_CONFIGURED_PINGWHEEL_CLIPS: 'setConfiguredPingwheelClips'
 }
 /* const arcAudioClipMap = new Map<number, string>([
     [1, "jellybeans"],
@@ -36,21 +40,21 @@ export const usePingwheelStore = defineStore({
   id: 'PingwheelStore',
   state: () => ({
     configuredPingwheelAudioClips: new Map<number, string>([
-      [1, 'jellybeans'],
-      [2, 'kanker'],
-      [3, 'magnumDong'],
-      [4, 'shitYourself'],
-      [5, 'suck_my_ass'],
-      [6, 'urARtrd'],
+      [1, 'void'],
+      [2, 'void'],
+      [3, 'void'],
+      [4, 'void'],
+      [5, 'void'],
+      [6, 'void'],
       [7, 'void'],
-      [8, 'sharks']
+      [8, 'void']
     ]) as Map<number, string>,
     toggled: false
   }),
   actions: {
     [FUNCTIONS.NATIVE_MOUSE_EVENT](payload: NativeMouseEventData) {
       console.log(JSON.stringify(payload))
-      let sector = payload.sector == 1 ? 8 : payload.sector - 1
+      let sector = payload.sector == 0 ? 8 : payload.sector
       let sectoredClip: string | undefined =
         this.configuredPingwheelAudioClips.get(sector)
       if (sectoredClip) {
@@ -59,6 +63,12 @@ export const usePingwheelStore = defineStore({
           payload: sectoredClip
         })
       }
+    },
+    [FUNCTIONS.SET_CONFIGURED_PINGWHEEL_CLIPS](payload: any) {
+      console.log('Setting configured ping wheel clips')
+      payload.forEach((x: { sector: number; clipName: string }) =>
+        this.configuredPingwheelAudioClips.set(x.sector, x.clipName)
+      )
     }
     /*     [FUNCTIONS.SET_PINGWHEEL_CLIP](payload: { sector: number; clip: string }) {
       this.configuredPingwheelAudioClips.set(payload.sector, payload.clip)

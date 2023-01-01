@@ -25,3 +25,8 @@ export interface TextSynthesizeData {
   textToSynthesize: string
   newFilename: string
 }
+
+export type ConfigWriteDataTypes = {
+  section: 'pingwheel'
+  value: { sector: number; clipName: string }[]
+}
