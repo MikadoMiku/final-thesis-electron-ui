@@ -20,7 +20,7 @@ if (isDev) {
   addonPath =
     'C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints'
 } else {
-  addonPath = path.join(__dirname, 'build', 'Release', 'AudioEndpoints.node')
+  addonPath = path.join(app.getAppPath(), '..', '..', 'AudioEndpoints.node')
 }
 
 const nativeDemutAddon: any = require(addonPath)

@@ -105,7 +105,7 @@ async function addFilesToApp(filePaths: CopyableFile[]) {
   }
   try {
     for (const file of filePaths) {
-      await copyFile(file.filePath, testDragFolder + file.fileName)
+      await copyFile(file.filePath, testDragFolder + '/' + file.fileName)
     }
   } catch (e) {
     console.log(e)
