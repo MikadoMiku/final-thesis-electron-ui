@@ -2,6 +2,7 @@ import {
   AudioEndpoints,
   DataOfClipFiles,
   NativeMouseEvent,
+  SendCurrentOverlayHotkey,
   SetConfiguredPingwheelClips
 } from '../../../api/api-messages'
 
@@ -17,3 +18,5 @@ export type PrivatePingWheelStoreFunctions = {
   type: 'setPingwheelClip'
   payload: { sector: number; file: string }
 }
+
+export type ConfigurationStoreFunctions = SendCurrentOverlayHotkey

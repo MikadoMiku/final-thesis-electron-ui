@@ -1,1 +1,15 @@
-{"defaultAudioClipDir":"C:/Users/power/Desktop/Demut_test_file_drag/","pingwheelSectors":8,"pingwheel":[{"sector":1,"clipName":"fucking-avast"},{"sector":2,"clipName":"gold"},{"sector":3,"clipName":"jellybeans"},{"sector":4,"clipName":"kanker"},{"sector":5,"clipName":"magnumDong"},{"sector":6,"clipName":"mil"},{"sector":7,"clipName":"misha"},{"sector":8,"clipName":"sharks"}],"securityModule":{"constants":{"DELAYS":{"default":200,"completed":5000}}}}
+{
+  "defaultOverlayButton": "f9",
+  "defaultAudioClipDir": "C:/Users/power/Desktop/Demut_test_file_drag/",
+  "pingwheelSectors": 8,
+  "pingwheel": [
+    { "sector": 1, "clipName": "fucking-avast" },
+    { "sector": 2, "clipName": "gold" },
+    { "sector": 3, "clipName": "jellybeans" },
+    { "sector": 4, "clipName": "kanker" },
+    { "sector": 5, "clipName": "magnumDong" },
+    { "sector": 6, "clipName": "mil" },
+    { "sector": 7, "clipName": "misha" },
+    { "sector": 8, "clipName": "sharks" }
+  ]
+}

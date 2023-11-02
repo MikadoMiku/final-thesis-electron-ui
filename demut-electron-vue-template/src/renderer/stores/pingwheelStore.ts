@@ -26,16 +26,6 @@ export const FUNCTIONS: F = {
   NATIVE_MOUSE_EVENT: 'nativeMouseEvent',
   SET_CONFIGURED_PINGWHEEL_CLIPS: 'setConfiguredPingwheelClips'
 }
-/* const arcAudioClipMap = new Map<number, string>([
-    [1, "jellybeans"],
-    [2, "kanker"],
-    [3, "magnumDong"],
-    [4, "shitYourself"],
-    [5, "suck_my_ass"],
-    [6, "urARtrd"],
-    [7, "void"],
-    [8, "void"],
-]) */
 export const usePingwheelStore = defineStore({
   id: 'PingwheelStore',
   state: () => ({

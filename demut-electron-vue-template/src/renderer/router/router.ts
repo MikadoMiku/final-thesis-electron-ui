@@ -6,6 +6,7 @@ import PingWheel from '../components/PingWheel.vue'
 import AudioFiles from '../components/AudioFiles.vue'
 import TextToSpeech from '../components/TextToSpeech.vue'
 import OverlayMain from '../components/overlay/OverlayMain.vue'
+import Configuration from '../components/Configuration.vue'
 
 const routes = [
   {
@@ -35,6 +36,10 @@ const routes = [
       {
         path: '/textToSpeech',
         component: TextToSpeech
+      },
+      {
+        path: '/configuration',
+        component: Configuration
       }
     ]
   },

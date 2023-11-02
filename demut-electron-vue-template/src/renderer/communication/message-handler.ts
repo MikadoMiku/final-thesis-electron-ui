@@ -3,6 +3,7 @@ import { useAudioEndpointsStore } from '../stores/audioEndpointsStore'
 import {
   AudioClipStoreFunctions,
   AudioEndpointStoreFunctions,
+  ConfigurationStoreFunctions,
   PingwheelStoreFunctions
 } from '../stores/storeTypings/audioEndpointStoreTypes'
 import { BackToUiEventSet } from '../../api/api-messages'
@@ -10,6 +11,7 @@ import { IpcRendererEvent } from 'electron'
 import { useAudioClipsStore } from '../stores/audioClipStore'
 import { usePingwheelStore } from '../stores/pingwheelStore'
 import { router } from '../main'
+import { useConfigurationStore } from '../stores/configurationStore'
 
 export function handleMessage(_event: IpcRendererEvent, msg: BackToUiEventSet) {
   console.log(
@@ -31,6 +33,13 @@ export function handleMessage(_event: IpcRendererEvent, msg: BackToUiEventSet) {
   } else if (msg.type in usePingwheelStore()) {
     const store = usePingwheelStore()
     msg = msg as PingwheelStoreFunctions
+    if ('payload' in msg) {
+      store[msg.type](msg.payload as any)
+      return
+    }
+  } else if (msg.type in useConfigurationStore()) {
+    const store = useConfigurationStore()
+    msg = msg as ConfigurationStoreFunctions
     if ('payload' in msg) {
       store[msg.type](msg.payload as any)
       return

@@ -4,7 +4,9 @@ import path from 'path'
 import { sendMsg } from './communicator'
 import fileWatcher from 'chokidar'
 import { exec } from 'child_process'
-import { configuration } from '../main'
+import { ConfigurationChangesEmitter, configuration } from '../main'
+
+const os = require('os')
 
 let audioClipsFileWatcher: fileWatcher.FSWatcher
 
@@ -17,8 +19,10 @@ export async function getDataOfFiles() {
     testFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
   } else {
     testFolder = path.join(
-      path.join(process?.env?.ProgramData!, '\\Demut'),
-      '\\DEMUT_WAV_CLIPS'
+      os.homedir(),
+      'Documents',
+      'Demut',
+      'DEMUT_WAV_CLIPS'
     )
   }
   const files = fs.readdirSync(testFolder, 'utf8')
@@ -42,8 +46,10 @@ export function startAudioCLipFilesDirWatcher() {
     watchedFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
   } else {
     watchedFolder = path.join(
-      path.join(process?.env?.ProgramData!, '\\Demut'),
-      '\\DEMUT_WAV_CLIPS'
+      os.homedir(),
+      'Documents',
+      'Demut',
+      'DEMUT_WAV_CLIPS'
     )
   }
   audioClipsFileWatcher = fileWatcher.watch(watchedFolder, {
@@ -70,8 +76,10 @@ export function openAudioclipFolder() {
     openFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
   } else {
     openFolder = path.join(
-      path.join(process?.env?.ProgramData!, '\\Demut'),
-      '\\DEMUT_WAV_CLIPS'
+      os.homedir(),
+      'Documents',
+      'Demut',
+      'DEMUT_WAV_CLIPS'
     )
   }
   exec(`start ${openFolder}`, (error, stdout, stderr) => {
@@ -86,18 +94,30 @@ export function openAudioclipFolder() {
 
 export function writeToConfiguration(message: ConfigWriteDataTypes) {
   try {
-    const filepath = path.join(
-      process.env.NODE_ENV !== 'development'
-        ? path.join(process?.env?.ProgramData!, '\\Demut\\') // Windows specific!
-        : path.join(process.cwd(), '\\config\\'),
+    const configFileName =
       process.env.NODE_ENV !== 'development' ? 'config.json' : 'app-config.json'
+    const documentsPath = path.join(
+      os.homedir(),
+      'Documents',
+      'Demut',
+      'Config'
     )
+    // Ensure the directory exists, creating it if needed
+    if (!fs.existsSync(documentsPath)) {
+      fs.mkdirSync(documentsPath, { recursive: true })
+    }
+    const filepath = path.join(documentsPath, configFileName)
+
     if (message.section == 'pingwheel') {
       configuration.pingwheel = message.value
+    } else if (message.section == 'defaultOverlayButton') {
+      configuration.defaultOverlayButton = message.value
     }
-    fs.writeFile(filepath, JSON.stringify(configuration), () =>
+    fs.writeFile(filepath, JSON.stringify(configuration), () => {
       console.log('Writing to config file done.')
-    )
+      // Emit the event with an argument
+      ConfigurationChangesEmitter.emit('overlayKeyChanged')
+    })
     console.log(`Full Config = ${JSON.stringify(configuration)}`)
   } catch (e) {
     console.log(e)

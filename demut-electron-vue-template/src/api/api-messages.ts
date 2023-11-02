@@ -50,6 +50,8 @@ export type WriteToConfig = {
 
 export type StopOverlay = { type: 'stopOverlay' }
 
+export type GetCurrentOverlayHotkey = { type: 'getCurrentOverlayHotkey' }
+
 export type UiToBackEventSet =
   | PlayClip
   | GetAudioEndpoints
@@ -64,6 +66,7 @@ export type UiToBackEventSet =
   | OpenAudioclipFolder
   | WriteToConfig
   | StopOverlay
+  | GetCurrentOverlayHotkey
 
 /* --------------------------------------------- To UI ------------------------------------------------------- */
 
@@ -95,6 +98,11 @@ export type SetConfiguredPingwheelClips = {
   payload: ConfigWriteDataTypes
 }
 
+export type SendCurrentOverlayHotkey = {
+  type: 'sendCurrentOverlayHotkey'
+  payload: string
+}
+
 export type BackToUiEventSet =
   | AudioClipNames
   | AudioEndpoints
@@ -103,3 +111,4 @@ export type BackToUiEventSet =
   | DataOfClipFiles
   | OverlayRouterPush
   | SetConfiguredPingwheelClips
+  | SendCurrentOverlayHotkey

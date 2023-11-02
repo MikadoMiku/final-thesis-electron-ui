@@ -1,6 +1,10 @@
 import { ipcMain, IpcMainEvent, ipcRenderer } from 'electron'
 import { BackToUiEventSet, UiToBackEventSet } from '../../api/api-messages'
-import nativeDemutAddon, { mainWindow } from '../main'
+import nativeDemutAddon, {
+  configuration,
+  currentOverlayKey,
+  mainWindow
+} from '../main'
 import { copyFile } from 'fs/promises'
 import { AudioEndpoint, CopyableFile } from '../../api/api-payload-types'
 import {
@@ -10,6 +14,7 @@ import {
   writeToConfiguration
 } from './communicatorFunctions'
 import path from 'path'
+const os = require('os')
 
 export function setupCommunicator() {
   ipcMain.on('message-from-ui', handleMessage)
@@ -72,6 +77,12 @@ function handleMessage(_event: IpcMainEvent, msg: UiToBackEventSet) {
       case 'writeToConfig':
         writeToConfiguration(msg.payload)
         break
+      case 'getCurrentOverlayHotkey':
+        sendMsg({
+          type: 'sendCurrentOverlayHotkey',
+          payload: currentOverlayKey
+        })
+        break
       default:
         console.log('UNKNOWN COMMAND | CANNOT SEND TO NATIVE ADDON')
     }
@@ -86,8 +97,10 @@ async function addFilesToApp(filePaths: CopyableFile[]) {
     testDragFolder = 'C:/Users/power/Desktop/Demut_test_file_drag/'
   } else {
     testDragFolder = path.join(
-      path.join(process?.env?.ProgramData!, '\\Demut'),
-      '\\DEMUT_WAV_CLIPS\\'
+      os.homedir(),
+      'Documents',
+      'Demut',
+      'DEMUT_WAV_CLIPS'
     )
   }
   try {

@@ -43,6 +43,8 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
                   <th class="label">Extension</th>
                   <th class="label">Sector</th>
                   <th class="label">Size</th>
+
+
                 </tr>
               </thead>
               <tbody>
@@ -65,6 +67,7 @@ const audioFilesData = computed(() => useAudioClipsStore().audioClipFilesData)
                   </tr>
                 </TransitionGroup>
               </tbody>
+              
             </table>
           </div>
         </div>
@@ -116,9 +119,7 @@ th {
   z-index: 10000;
   border-bottom: 1px solid black;
 }
-.label-container {
-  position: static;
-}
+
 .label {
   text-align: center;
 }

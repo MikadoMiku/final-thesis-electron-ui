@@ -27,6 +27,6 @@ export interface TextSynthesizeData {
 }
 
 export type ConfigWriteDataTypes = {
-  section: 'pingwheel'
-  value: { sector: number; clipName: string }[]
+  section: 'pingwheel' | 'defaultOverlayButton'
+  value: { sector: number; clipName: string }[] | string
 }

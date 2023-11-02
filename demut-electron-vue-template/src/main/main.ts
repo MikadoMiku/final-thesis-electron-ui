@@ -8,13 +8,31 @@ import {
 } from 'electron'
 import { join } from 'path'
 import path from 'path'
-import { setupCommunicator } from './communication/communicator'
+import { sendMsg, setupCommunicator } from './communication/communicator'
 import fs from 'fs'
 import { BackToUiEventSet } from '../api/api-messages'
+const os = require('os')
 
-const nativeDemutAddon = require('C:\\Program Files (x86)\\Demut\\AudioEndpoints')
+const isDev = process.env.NODE_ENV === 'development'
+export let currentOverlayKey = 'f9'
+let addonPath
+if (isDev) {
+  addonPath =
+    'C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints'
+} else {
+  addonPath = path.join(__dirname, 'build', 'Release', 'AudioEndpoints.node')
+}
+
+const nativeDemutAddon: any = require(addonPath)
+
+// const nativeDemutAddon = require('C:\\Program Files (x86)\\Demut\\AudioEndpoints')
 // const nativeDemutAddon = require('C:\\Git_repos\\final-thesis-audio\\build\\Release\\AudioEndpoints')
 export default nativeDemutAddon
+
+const EventEmitter = require('events')
+
+// Create an instance of EventEmitter
+export const ConfigurationChangesEmitter = new EventEmitter()
 
 export let configuration
 
@@ -94,14 +112,22 @@ function createWindow() {
 
 function loadConfigurationFromJson() {
   try {
-    const filepath = path.join(
-      process.env.NODE_ENV !== 'development'
-        ? path.join(process?.env?.ProgramData!, '\\Demut\\') // Windows specific!
-        : path.join(process.cwd(), '\\config\\'),
+    const configFileName =
       process.env.NODE_ENV !== 'development' ? 'config.json' : 'app-config.json'
+    const documentsPath = path.join(
+      os.homedir(),
+      'Documents',
+      'Demut',
+      'Config'
     )
-    configuration = JSON.parse(fs.readFileSync(filepath).toString())
+    // Ensure the directory exists, creating it if needed
+    if (!fs.existsSync(documentsPath)) {
+      fs.mkdirSync(documentsPath, { recursive: true })
+    }
+    const filepath = path.join(documentsPath, configFileName)
 
+    configuration = JSON.parse(fs.readFileSync(filepath).toString())
+    console.log('configuration loaded')
     //console.log(`Full Config = ${JSON.stringify(configuration)}`)
   } catch (e) {
     console.log(e)
@@ -135,7 +161,20 @@ app.whenReady().then(() => {
     }
   })
 
-  globalShortcut.register('f9', () => {
+  let overlayKey = 'f9'
+  if (configuration.defaultOverlayButton) {
+    overlayKey = configuration.defaultOverlayButton?.toLowerCase()
+    console.log(
+      'setting overlayKey to: ',
+      configuration.defaultOverlayButton?.toLowerCase()
+    )
+  }
+  if (!overlayKey) {
+    overlayKey = 'f9'
+  }
+  currentOverlayKey = overlayKey
+  const globalShortcutFunc = () => {
+    // make f9 configurable
     overlayWindow?.webContents.send('message-from-back', {
       type: 'overlayRouterPush'
     } as BackToUiEventSet)
@@ -148,6 +187,27 @@ app.whenReady().then(() => {
     overlayWindow?.hide()
 
     overlayWindowShown = false
+  }
+  globalShortcut.register(overlayKey, globalShortcutFunc)
+
+  // Define an event handler
+  ConfigurationChangesEmitter.on('overlayKeyChanged', (arg) => {
+    console.log('henlo')
+    loadConfigurationFromJson()
+    globalShortcut.unregister(currentOverlayKey)
+    let overlayKey = 'f9'
+    if (configuration.defaultOverlayButton) {
+      overlayKey = configuration.defaultOverlayButton?.toLowerCase()
+    }
+    if (!overlayKey) {
+      overlayKey = 'f9'
+    }
+    currentOverlayKey = overlayKey
+    globalShortcut.register(overlayKey, globalShortcutFunc)
+    sendMsg({
+      type: 'sendCurrentOverlayHotkey',
+      payload: currentOverlayKey
+    })
   })
 })
 
