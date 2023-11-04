@@ -4,7 +4,11 @@ import path from 'path'
 import { sendMsg } from './communicator'
 import fileWatcher from 'chokidar'
 import { exec } from 'child_process'
-import { ConfigurationChangesEmitter, configuration } from '../main'
+import {
+  ConfigurationChangesEmitter,
+  configuration,
+  getUserDocumentsFolderOnedriveWorkaround
+} from '../main'
 
 const os = require('os')
 
@@ -19,8 +23,7 @@ export async function getDataOfFiles() {
     testFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
   } else {
     testFolder = path.join(
-      os.homedir(),
-      'Documents',
+      getUserDocumentsFolderOnedriveWorkaround(),
       'Demut',
       'DEMUT_WAV_CLIPS'
     )
@@ -46,8 +49,7 @@ export function startAudioCLipFilesDirWatcher() {
     watchedFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
   } else {
     watchedFolder = path.join(
-      os.homedir(),
-      'Documents',
+      getUserDocumentsFolderOnedriveWorkaround(),
       'Demut',
       'DEMUT_WAV_CLIPS'
     )
@@ -76,8 +78,7 @@ export function openAudioclipFolder() {
     openFolder = 'C:/Users/power/Desktop/DEMUT_WAV_CLIPS'
   } else {
     openFolder = path.join(
-      os.homedir(),
-      'Documents',
+      getUserDocumentsFolderOnedriveWorkaround(),
       'Demut',
       'DEMUT_WAV_CLIPS'
     )
@@ -97,8 +98,7 @@ export function writeToConfiguration(message: ConfigWriteDataTypes) {
     const configFileName =
       process.env.NODE_ENV !== 'development' ? 'config.json' : 'app-config.json'
     const documentsPath = path.join(
-      os.homedir(),
-      'Documents',
+      getUserDocumentsFolderOnedriveWorkaround(),
       'Demut',
       'Config'
     )

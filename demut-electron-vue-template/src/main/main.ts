@@ -23,6 +23,12 @@ if (isDev) {
   addonPath = path.join(app.getAppPath(), '..', '..', 'AudioEndpoints.node')
 }
 
+export const getUserDocumentsFolderOnedriveWorkaround = () => {
+  const userName = os.userInfo().username
+  const documentsPath = path.join('C:', 'Users', userName, 'Documents')
+  return documentsPath
+}
+
 const nativeDemutAddon: any = require(addonPath)
 
 // const nativeDemutAddon = require('C:\\Program Files (x86)\\Demut\\AudioEndpoints')
@@ -115,8 +121,7 @@ function loadConfigurationFromJson() {
     const configFileName =
       process.env.NODE_ENV !== 'development' ? 'config.json' : 'app-config.json'
     const documentsPath = path.join(
-      os.homedir(),
-      'Documents',
+      getUserDocumentsFolderOnedriveWorkaround(),
       'Demut',
       'Config'
     )

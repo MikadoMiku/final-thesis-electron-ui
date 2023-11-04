@@ -3,6 +3,7 @@ import { BackToUiEventSet, UiToBackEventSet } from '../../api/api-messages'
 import nativeDemutAddon, {
   configuration,
   currentOverlayKey,
+  getUserDocumentsFolderOnedriveWorkaround,
   mainWindow
 } from '../main'
 import { copyFile } from 'fs/promises'
@@ -97,8 +98,7 @@ async function addFilesToApp(filePaths: CopyableFile[]) {
     testDragFolder = 'C:/Users/power/Desktop/Demut_test_file_drag/'
   } else {
     testDragFolder = path.join(
-      os.homedir(),
-      'Documents',
+      getUserDocumentsFolderOnedriveWorkaround(),
       'Demut',
       'DEMUT_WAV_CLIPS'
     )
